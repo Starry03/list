@@ -1,4 +1,3 @@
-#include <string.h>
 #include "file_parser.h"
 #include <stdbool.h>
 
