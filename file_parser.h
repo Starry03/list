@@ -24,15 +24,13 @@ typedef struct s_filedata {
 
 typedef struct s_print_options {
 	bool	log_dim;
+	size_t	col_width;
 	char	**ignore_patterns;
 }	t_print_options;
 
 t_filedata		*filedata_init(char *name, t_type type, FILE *file);
 void			print_folder(char *folder_name, size_t folder_level, t_print_options options);
-static size_t	get_size(FILE *file);
-static void		print_dir(t_filedata *filedata);
-static void		print_file(t_filedata *filedata, t_print_options options);
-void			print_filedata(t_filedata *filedata, t_print_options options);
+void			print_filedata(t_filedata *filedata, t_print_options options, size_t name_len);
 void			filedata_free(t_filedata *filedata);
 
 #endif // !FILE_PARSER_H
