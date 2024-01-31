@@ -110,6 +110,8 @@ static void	print_file(t_filedata *filedata, t_print_options options, size_t nam
 {
 	const size_t	tab_dim = 4;
 	size_t			n_tabs;
+	size_t			gap;
+
 
 	printf("%s%s%s", STD_COLOR, filedata->name, STD_COLOR);
 	if (!options.log_dim)
@@ -117,11 +119,15 @@ static void	print_file(t_filedata *filedata, t_print_options options, size_t nam
 		write(1, "\n", 1);	
 		return ;
 	}
-	n_tabs = (options.col_width * tab_dim - name_len) / tab_dim;
+	if (name_len >= options.col_width * tab_dim)
+		return ;
+
+	gap = options.col_width * tab_dim - name_len;
+	n_tabs = (gap) / tab_dim;
 	if (name_len % tab_dim != 0)
 		n_tabs++;
-	if (options.col_width * tab_dim - name_len < tab_dim)
-		n_tabs++;
+	if (gap < tab_dim)
+		n_tabs = 1;
 	while (n_tabs--)
 	 	printf("\t");
 	printf("%zu b\n", filedata->size);

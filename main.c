@@ -10,7 +10,7 @@ int	main(int argc, char *argv[])
 	/* default settings */
 	options.log_dim = true;
 	options.ignore_patterns = ignore_patterns;
-	options.col_width = 4;
+	options.col_width = 6;
 	if (argc == 1)
 		root = ".";
 	else 

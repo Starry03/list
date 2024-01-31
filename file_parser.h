@@ -4,12 +4,18 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#ifdef _WIN32
+#include <corecrt.h>
+#endif
+
+#ifndef _WIN32
+typedef unsigned long size_t;
+#endif
+
 # define STD_COLOR	"\x1B[0m"
 # define GREEN		"\x1B[32m"
 # define BLUE		"\x1B[34m"
 # define ROOT_LEVEL	0
-
-typedef unsigned long size_t;
 
 typedef enum e_type {
 	T_FILE = 8,
