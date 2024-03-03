@@ -8,7 +8,7 @@ Provides a better tree representation
 
 ## Requirements
 
-- Nerdfont
+- Nerdfont https://www.nerdfonts.com/font-downloads
 
 ## Bug
 
