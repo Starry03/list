@@ -114,12 +114,13 @@ void	print_folder(char *folder_name, size_t folder_level,
 			ft_print_n('\t', folder_level);
 		name_len = strlen(filedata->name);
 		print_filedata(filedata, options, name_len);
-		if (filedata->type == T_DIR)
+		if (filedata->type == T_DIR && options.recursive)
 		{
 			buf = build_path(folder_name, filedata->name);
 			print_folder(buf, folder_level + 1, options);
 			free(buf);
 		}
+		else printf("\n");
 		is_first = 0;
 		filedata_free(filedata);
 	}
@@ -141,21 +142,11 @@ static void	print_file(t_filedata *filedata, t_print_options options,
 
 	printf("%s%s%s", STD_COLOR, filedata->name, STD_COLOR);
 	if (!options.log_dim)
-	{
-		write(1, "\n", 1);
 		return ;
-	}
 	if (name_len >= options.col_width * tab_dim)
 		return ;
-	gap = options.col_width * tab_dim - name_len;
-	n_tabs = (gap) / tab_dim;
-	if (name_len % tab_dim != 0)
-		n_tabs++;
-	if (gap < tab_dim)
-		n_tabs = 1;
-	while (n_tabs--)
-		printf("\t");
-	printf("%zu b\n", filedata->size);
+	printf("\t");
+	printf("%zu b", filedata->size);
 }
 
 void	print_filedata(t_filedata *filedata, t_print_options options,
