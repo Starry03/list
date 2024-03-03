@@ -1,5 +1,7 @@
-#include "builders.h"
-#include "file_parser.h"
+#include "colors.h"
+#include "filedata.h"
+#include "printfolder.h"
+#include "utils.h"
 #include <dirent.h>
 #include <regex.h>
 #include <stdbool.h>
@@ -7,39 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 
-static size_t	get_size(FILE *file)
-{
-	size_t	bytes;
-
-	bytes = 0;
-	while (fgetc(file) != EOF)
-		bytes++;
-	return (bytes);
-}
-
-t_filedata	*filedata_init(char *name, t_type type, FILE *file)
-{
-	t_filedata	*addr;
-
-	addr = (t_filedata *)malloc(sizeof(t_filedata));
-	if (!addr)
-		return (NULL);
-	addr->name = name;
-	addr->type = type;
-	addr->size = get_size(file);
-	return (addr);
-}
-
-void	ft_print_n(char c, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i++ < n)
-		printf("%c", c);
-}
-
-bool	is_valid_folder(char *name, t_print_options options)
+bool	is_valid_folder(char *name, t_flags options)
 {
 	regex_t	reg;
 	size_t	i;
@@ -65,8 +35,7 @@ bool	is_valid_folder(char *name, t_print_options options)
 	return (res);
 }
 
-void	print_folder(char *folder_name, size_t folder_level,
-		t_print_options options)
+void	print_folder(char *folder_name, size_t folder_level, t_flags options)
 {
 	DIR				*dir;
 	FILE			*file;
@@ -120,52 +89,11 @@ void	print_folder(char *folder_name, size_t folder_level,
 			print_folder(buf, folder_level + 1, options);
 			free(buf);
 		}
-		else if (filedata->type != T_DIR) printf("\n");
+		else if (filedata->type != T_DIR)
+			printf("\n");
 		is_first = 0;
 		filedata_free(filedata);
 	}
 	free(d);
 	closedir(dir);
-}
-
-static void	print_dir(t_filedata *filedata)
-{
-	printf("%s\ue5ff %s%s\n", GREEN, filedata->name, STD_COLOR);
-}
-
-static void	print_file(t_filedata *filedata, t_print_options options,
-		size_t name_len)
-{
-	const size_t	tab_dim = 4;
-	size_t			n_tabs;
-	size_t			gap;
-
-	printf("%s%s%s", STD_COLOR, filedata->name, STD_COLOR);
-	if (!options.log_dim)
-		return ;
-	if (name_len >= options.col_width * tab_dim)
-		return ;
-	printf("\t");
-	printf("%zu b", filedata->size);
-}
-
-void	print_filedata(t_filedata *filedata, t_print_options options,
-		size_t name_len)
-{
-	switch (filedata->type)
-	{
-	case T_FILE:
-		print_file(filedata, options, name_len);
-		break ;
-	case T_DIR:
-		print_dir(filedata);
-		break ;
-	default:
-		break ;
-	}
-}
-
-void	filedata_free(t_filedata *filedata)
-{
-	free(filedata);
 }

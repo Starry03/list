@@ -1,15 +1,22 @@
 # List
 
-## Desc
+### Desc
 
 Inspired by 'ls' unix command
 
 Provides a better tree representation
 
-## Requirements
+### Requirements
 
 Nerdfont
 
-## Bug
+### Bug
 
-Column width and long file names causes a sigfault or something
+Aligning text is not for me :)
+
+## Usage
+
+#### Flags
+
+- ```-d``` displays file size
+- ```-R``` recursion

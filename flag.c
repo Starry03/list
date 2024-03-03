@@ -1,0 +1,47 @@
+#include "flag.h"
+#include <stdlib.h>
+#include <string.h>
+
+char	*get_flag(enum e_flag flag)
+{
+	switch (flag)
+	{
+	case LOG_DIM:
+		return ("-d");
+	case RECURSIVE:
+		return ("-R");
+	}
+	return (NULL);
+}
+
+void	init_default_flags(t_flags *flags)
+{
+	char	**patterns;
+
+	patterns = (char **)malloc(sizeof(char *) * 2);
+	patterns[0] = "^[.]";
+	patterns[1] = 0;
+	flags->log_dim = false;
+	flags->recursive = false;
+	flags->col_width = 4;
+	flags->root_path = ".";
+	flags->ignore_patterns = patterns;
+}
+
+void	parse_flags(t_flags *flags, size_t argc, char **argv)
+{
+	size_t i;
+	if (argc < 2)
+		return ;
+	if (argv[1][0] != '-')
+		flags->root_path = argv[1];
+	i = 1;
+	while (i < argc)
+	{
+		if (strcmp(argv[i], get_flag(LOG_DIM)) == 0)
+			flags->log_dim = true;
+		else if (strcmp(argv[i], get_flag(RECURSIVE)) == 0)
+			flags->recursive = true;
+		i++;
+	}
+}
