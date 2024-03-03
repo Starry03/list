@@ -9,7 +9,8 @@
 enum		e_flag
 {
 	LOG_DIM,
-	RECURSIVE
+	RECURSIVE,
+	SHOW_HIDDEN
 };
 
 char		*get_flag(enum e_flag flag);
@@ -18,6 +19,7 @@ typedef struct s_flags
 {
 	bool	log_dim;
 	bool	recursive;
+	bool	show_hidden;
 	size_t	col_width;
 	char	*root_path;
 	char	**ignore_patterns;

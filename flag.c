@@ -10,6 +10,8 @@ char	*get_flag(enum e_flag flag)
 		return ("-d");
 	case RECURSIVE:
 		return ("-R");
+	case SHOW_HIDDEN:
+		return ("-a");
 	}
 	return (NULL);
 }
@@ -23,6 +25,7 @@ void	init_default_flags(t_flags *flags)
 	patterns[1] = 0;
 	flags->log_dim = false;
 	flags->recursive = false;
+	flags->show_hidden = false;
 	flags->col_width = 4;
 	flags->root_path = ".";
 	flags->ignore_patterns = patterns;
@@ -42,6 +45,11 @@ void	parse_flags(t_flags *flags, size_t argc, char **argv)
 			flags->log_dim = true;
 		else if (strcmp(argv[i], get_flag(RECURSIVE)) == 0)
 			flags->recursive = true;
+		else if (strcmp(argv[i], get_flag(SHOW_HIDDEN)) == 0)
+		{
+			flags->show_hidden = true;
+			flags->ignore_patterns[0] = "^$";
+		}
 		i++;
 	}
 }
