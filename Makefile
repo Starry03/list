@@ -3,6 +3,8 @@ FLAGS = -Wall -Werror -Wextra
 NAME = list
 
 all:
-	@$(CC) *.c -o $(NAME)
+	@$(CC) *.c -g -o $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
+
 
 .PHONY: all
