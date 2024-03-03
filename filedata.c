@@ -22,6 +22,11 @@ void	filedata_free(t_filedata *filedata)
 	free(filedata);
 }
 
+bool		is_valid_type(t_type type)
+{
+	return (type == T_FILE || type == T_DIR);
+}
+
 static void	print_dir(t_filedata *filedata)
 {
 	printf("%s\ue5ff %s%s\n", GREEN, filedata->name, STD_COLOR);

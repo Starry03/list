@@ -1,7 +1,7 @@
 #ifndef FILEDATA_H
 # define FILEDATA_H
 
-#include "flag.h"
+# include "flag.h"
 # include <stddef.h>
 # include <stdio.h>
 
@@ -20,7 +20,7 @@ typedef struct s_filedata
 
 t_filedata	*filedata_init(char *name, t_type type, FILE *file);
 void		filedata_free(t_filedata *filedata);
-
+bool		is_valid_type(t_type type);
 void		print_filedata(t_filedata *filedata, t_flags options,
 				size_t name_len);
 

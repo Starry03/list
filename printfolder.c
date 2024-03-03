@@ -71,7 +71,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags options)
 		}
 		filedata = filedata_init(d->d_name, d->d_type, file);
 		fclose(file);
-		if (!is_valid_folder(filedata->name, options))
+		if (!filedata || !is_valid_type(filedata->type) || !is_valid_folder(filedata->name, options))
 		{
 			filedata_free(filedata);
 			continue ;
