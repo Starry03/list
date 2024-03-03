@@ -1,20 +1,24 @@
 # List
 
-### Desc
+## Desc
 
 Inspired by 'ls' unix command
 
 Provides a better tree representation
 
-### Requirements
+## Requirements
 
-Nerdfont
+- Nerdfont
 
-### Bug
+## Bug
 
-Aligning text is not for me :)
+Aligning text is not for me
 
 ## Usage
+
+```
+./list <folderpath> <flags>
+```
 
 #### Flags
 
