@@ -8,6 +8,9 @@
 #include <string.h>
 #include <unistd.h>
 
+#define print_tabs(n) ft_print_n('\t', n)
+#define TREE_BRANCH	"  L\t"
+
 bool	is_valid_folder(char *name, t_flags options)
 {
 	regex_t	reg;
@@ -41,10 +44,10 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags options)
 	t_filedata		*filedata;
 	struct dirent	*d;
 	char			*buf;
-	size_t			is_first;
+	bool			is_first;
 	size_t			name_len;
 
-	is_first = 1;
+	is_first = true;
 	dir = opendir(folder_name);
 	if (!dir)
 	{
@@ -75,8 +78,8 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags options)
 		}
 		if (is_first && folder_level)
 		{
-			ft_print_n('\t', folder_level - 1);
-			printf("  L\t");
+			print_tabs(folder_level - 1);
+			printf(TREE_BRANCH);
 		}
 		else
 			ft_print_n('\t', folder_level);
@@ -90,7 +93,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags options)
 		}
 		else if (filedata->type != T_DIR)
 			printf("\n");
-		is_first = 0;
+		is_first = false;
 		filedata_free(filedata);
 	}
 	free(d);
