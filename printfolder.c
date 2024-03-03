@@ -37,7 +37,7 @@ bool	is_valid_folder(char *name, t_flags options)
 	return (res);
 }
 
-void	print_folder(char *folder_name, size_t folder_level, t_flags options)
+void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 {
 	DIR				*dir;
 	FILE			*file;
@@ -71,7 +71,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags options)
 		}
 		filedata = filedata_init(d->d_name, d->d_type, file);
 		fclose(file);
-		if (!filedata || !is_valid_type(filedata->type) || !is_valid_folder(filedata->name, options))
+		if (!filedata || !is_valid_type(filedata->type) || !is_valid_folder(filedata->name, flags))
 		{
 			filedata_free(filedata);
 			continue ;
@@ -84,11 +84,11 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags options)
 		else
 			ft_print_n('\t', folder_level);
 		name_len = strlen(filedata->name);
-		print_filedata(filedata, options, name_len);
-		if (filedata->type == T_DIR && options.recursive)
+		print_filedata(filedata, flags, name_len);
+		if (filedata->type == T_DIR && flags.recursive)
 		{
 			buf = build_path(folder_name, filedata->name);
-			print_folder(buf, folder_level + 1, options);
+			print_folder(buf, folder_level + 1, flags);
 			free(buf);
 		}
 		else if (filedata->type != T_DIR)
