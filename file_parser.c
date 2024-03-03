@@ -120,7 +120,7 @@ void	print_folder(char *folder_name, size_t folder_level,
 			print_folder(buf, folder_level + 1, options);
 			free(buf);
 		}
-		else printf("\n");
+		else if (filedata->type != T_DIR) printf("\n");
 		is_first = 0;
 		filedata_free(filedata);
 	}
