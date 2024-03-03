@@ -16,11 +16,18 @@ Aligning text is not for me
 
 ## Usage
 
+compile
 ```
-./list <folderpath> <flags>
+cd <this folder>
+make
+```
+
+run
+```
+./list <path> <flags separated by space>
 ```
 
 #### Flags
 
 - ```-d``` displays file size
-- ```-R``` recursion
+- ```-R``` recursive
