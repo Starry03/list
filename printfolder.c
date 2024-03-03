@@ -4,7 +4,6 @@
 #include "utils.h"
 #include <dirent.h>
 #include <regex.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
