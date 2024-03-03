@@ -25,7 +25,7 @@ int	main(int argc, char *argv[])
 	options.log_dim = false;
 	options.recursive = false;
 	options.ignore_patterns = ignore_patterns;
-	options.col_width = 6;
+	options.col_width = 4;
 	parse_flags(argc, argv, &options);
 	if (argc == 1)
 		root = ".";
