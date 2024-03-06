@@ -1,20 +1,32 @@
 # List
 
-## Desc
+### Desc
 
 Inspired by 'ls' unix command
 
 Provides a better tree representation
 
-## Requirements
+### Requirements
 
 - Nerdfont https://www.nerdfonts.com/font-downloads
 
-## Bug
+### Bug
 
 Aligning text is not for me
 
-## Usage
+### Install
+
+Add the following line to ~/.bashrc
+
+```sh
+alias [name]="<path to list executable>"
+```
+run
+```sh
+source ~/.bashrc
+```
+
+### Usage
 
 compile
 ```

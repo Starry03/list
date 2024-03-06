@@ -37,7 +37,7 @@ static void	print_file(t_filedata *filedata, t_flags options,
 {
 	const size_t	tab_dim = 4;
 
-	printf("%s%s%s", STD_COLOR, filedata->name, STD_COLOR);
+	printf("%s", filedata->name);
 	if (!options.log_dim)
 		return ;
 	if (name_len >= options.col_width * tab_dim)
