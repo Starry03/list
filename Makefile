@@ -3,5 +3,5 @@ FLAGS = -Wall -Werror -Wextra
 NAME = list
 
 all:
-	$(CC) $(FLAGS) *.c -g -o $(NAME)
+	$(CC) $(FLAGS) *.c -o $(NAME)
 
