@@ -22,7 +22,7 @@ void	filedata_free(t_filedata *filedata)
 	free(filedata);
 }
 
-bool		is_valid_type(t_type type)
+bool	is_valid_type(t_type type)
 {
 	return (type == T_FILE || type == T_DIR);
 }
@@ -32,8 +32,7 @@ static void	print_dir(t_filedata *filedata)
 	printf("%s\ue5ff %s%s\n", YELLOW, STD_COLOR, filedata->name);
 }
 
-static void	print_file(t_filedata *filedata, t_flags options,
-		size_t name_len)
+static void	print_file(t_filedata *filedata, t_flags options, size_t name_len)
 {
 	const size_t	tab_dim = 4;
 

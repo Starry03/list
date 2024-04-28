@@ -1,4 +1,5 @@
 #include "flag.h"
+#include <regex.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -52,4 +53,30 @@ void	parse_flags(t_flags *flags, size_t argc, char **argv)
 		}
 		i++;
 	}
+}
+
+bool	is_valid_folder(char *name, t_flags options)
+{
+	regex_t	reg;
+	size_t	i;
+	bool	res;
+
+	res = true;
+	i = 0;
+	while (options.ignore_patterns[i])
+	{
+		if (regcomp(&reg, options.ignore_patterns[i], 0) != 0)
+		{
+			res = false;
+			break ;
+		}
+		if (!regexec(&reg, name, 0, NULL, 0))
+		{
+			res = false;
+			break ;
+		}
+		i++;
+	}
+	regfree(&reg);
+	return (res);
 }

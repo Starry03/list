@@ -1,9 +1,9 @@
 #include "colors.h"
 #include "filedata.h"
+#include "flag.h"
 #include "printfolder.h"
 #include "utils.h"
 #include <dirent.h>
-#include <regex.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -11,30 +11,23 @@
 #define print_tabs(n) ft_print_n('\t', n)
 #define TREE_BRANCH "  L\t"
 
-bool	is_valid_folder(char *name, t_flags options)
+bool	is_printable(t_filedata *filedata, t_flags flags)
 {
-	regex_t	reg;
-	size_t	i;
-	bool	res;
+	return (!(filedata && is_valid_type(filedata->type)
+			&& is_valid_folder(filedata->name, flags)));
+}
 
-	res = true;
-	i = 0;
-	while (options.ignore_patterns[i])
-	{
-		if (regcomp(&reg, options.ignore_patterns[i], 0) != 0)
-		{
-			res = false;
-			break ;
-		}
-		if (!regexec(&reg, name, 0, NULL, 0))
-		{
-			res = false;
-			break ;
-		}
-		i++;
-	}
-	regfree(&reg);
-	return (res);
+t_filedata	*filedata_get_from_file(struct dirent *d, char *path)
+{
+	t_filedata	*filedata;
+	FILE		*file;
+
+	file = fopen(path, "r");
+	if (!file)
+		return (NULL);
+	filedata = filedata_init(d->d_name, d->d_type, file);
+	fclose(file);
+	return (filedata);
 }
 
 void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
@@ -42,7 +35,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 	DIR				*dir;
 	FILE			*file;
 	t_filedata		*filedata;
-	struct dirent	*d;
+	struct dirent	*dirent_dir;
 	char			*buf;
 	bool			is_first;
 	size_t			name_len;
@@ -50,26 +43,18 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 	is_first = true;
 	dir = opendir(folder_name);
 	if (!dir)
-	{
-		write(2, "not found\n", 10);
 		return ;
-	}
-	while ((d = readdir(dir)) != NULL)
+	while ((dirent_dir = readdir(dir)) != NULL)
 	{
-		buf = build_path(folder_name, d->d_name);
+		buf = build_path(folder_name, dirent_dir->d_name);
 		if (!buf)
 		{
-			free(d);
+			free(dirent_dir);
 			continue ;
 		}
-		file = fopen(buf, "r");
+		filedata = filedata_get_from_file(dirent_dir, buf);
 		free(buf);
-		if (!file)
-			continue ;
-		filedata = filedata_init(d->d_name, d->d_type, file);
-		fclose(file);
-		if (!filedata || !is_valid_type(filedata->type)
-			|| !is_valid_folder(filedata->name, flags))
+		if (is_printable(filedata, flags))
 		{
 			filedata_free(filedata);
 			continue ;
@@ -78,6 +63,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 		{
 			print_tabs(folder_level - 1);
 			printf(TREE_BRANCH);
+			is_first = false;
 		}
 		else
 			ft_print_n('\t', folder_level);
@@ -91,9 +77,8 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 		}
 		else if (filedata->type != T_DIR)
 			printf("\n");
-		is_first = false;
 		filedata_free(filedata);
 	}
-	free(d);
+	free(dirent_dir);
 	closedir(dir);
 }

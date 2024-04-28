@@ -1,7 +1,8 @@
 CC = gcc
 FLAGS = -Wall -Werror -Wextra
+OPT = -O2
 NAME = list
 
 all:
-	$(CC) $(FLAGS) *.c -o $(NAME)
+	$(CC) $(FLAGS) $(OPT) *.c -o $(NAME)
 
