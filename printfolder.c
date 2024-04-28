@@ -33,7 +33,6 @@ t_filedata	*filedata_get_from_file(struct dirent *d, char *path)
 void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 {
 	DIR				*dir;
-	FILE			*file;
 	t_filedata		*filedata;
 	struct dirent	*dirent_dir;
 	char			*buf;

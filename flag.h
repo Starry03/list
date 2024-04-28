@@ -27,5 +27,6 @@ typedef struct s_flags
 
 void		init_default_flags(t_flags *flags);
 void		parse_flags(t_flags *flags, size_t argc, char **argv);
+bool		is_valid_folder(char *name, t_flags options);
 
 #endif // !FLAG_H
