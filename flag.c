@@ -22,7 +22,7 @@ void	init_default_flags(t_flags *flags)
 	char	**patterns;
 
 	patterns = (char **)malloc(sizeof(char *) * 2);
-	patterns[0] = "^[.]";
+	patterns[0] = 0;
 	patterns[1] = 0;
 	flags->log_dim = false;
 	flags->recursive = false;
@@ -77,6 +77,7 @@ bool	is_valid_folder(char *name, t_flags options)
 		}
 		i++;
 	}
-	regfree(&reg);
+	if (i)
+		regfree(&reg);
 	return (res);
 }
