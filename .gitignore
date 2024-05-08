@@ -1,4 +1,5 @@
 .vscode
-.idea
-test/
-./list
+
+# executables
+/list
+/install.sh
