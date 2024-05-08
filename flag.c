@@ -45,7 +45,11 @@ void	parse_flags(t_flags *flags, size_t argc, char **argv)
 		if (strcmp(argv[i], get_flag(LOG_DIM)) == 0)
 			flags->log_dim = true;
 		else if (strcmp(argv[i], get_flag(RECURSIVE)) == 0)
+		{
 			flags->recursive = true;
+			// cannot start with a dot
+			flags->ignore_patterns[0] = "^\\.";
+		}
 		else if (strcmp(argv[i], get_flag(SHOW_HIDDEN)) == 0)
 		{
 			flags->show_hidden = true;
