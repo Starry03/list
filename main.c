@@ -11,7 +11,7 @@ int	main(int argc, char **argv)
 	if (!flags.show_version)
 		print_folder(flags.root_path, ROOT_LEVEL, flags);
 	else
-		printf("Version 1.0\n");
+		printf("Version 1.4\n");
 	flags_free(&flags);
 	return (0);
 }

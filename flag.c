@@ -99,7 +99,8 @@ bool	is_valid_folder(char *name, t_flags options)
 		regfree(&reg);
 		i++;
 	}
-	regfree(&reg);
+	if (!res)
+		regfree(&reg);
 	return (res);
 }
 
