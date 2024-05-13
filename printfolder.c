@@ -13,8 +13,8 @@
 
 bool	is_printable(t_filedata *filedata, t_flags flags)
 {
-	return (!(filedata && is_valid_type(filedata->type)
-			&& is_valid_folder(filedata->name, flags)));
+	return (filedata && is_valid_type(filedata->type)
+		&& is_valid_folder(filedata->name, flags));
 }
 
 t_filedata	*filedata_get_from_file(struct dirent *d, char *path)
@@ -53,7 +53,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 		}
 		filedata = filedata_get_from_file(dirent_dir, buf);
 		free(buf);
-		if (is_printable(filedata, flags))
+		if (!is_printable(filedata, flags))
 		{
 			filedata_free(filedata);
 			continue ;
