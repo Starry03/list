@@ -43,3 +43,5 @@ run
 
 - ```-d``` displays file size
 - ```-R``` recursive
+- ```-a``` hidden files
+- ```-V``` version

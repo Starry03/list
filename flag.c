@@ -19,6 +19,8 @@ char	*get_flag(enum e_flag flag)
 		return ("-R");
 	case SHOW_HIDDEN:
 		return ("-a");
+	case VERSION:
+		return ("-V");
 	}
 	return (NULL);
 }
@@ -29,6 +31,7 @@ void	init_default_flags(t_flags *flags)
 	flags->recursive = false;
 	flags->show_hidden = false;
 	flags->col_width = 4;
+	flags->show_version = false;
 	flags->root_path = ".";
 	flags->ignore_patterns = (char **)calloc(N_PATTERNS + 1, sizeof(char *));
 	flags->ignore_patterns[0] = strdup(IGNORE_HIDDEN_FILES);
@@ -67,6 +70,8 @@ void	parse_flags(t_flags *flags, size_t argc, char **argv)
 			flags->recursive = true;
 		else if (strcmp(argv[i], get_flag(SHOW_HIDDEN)) == 0)
 			flags->show_hidden = true;
+		else if (strcmp(argv[i], get_flag(VERSION)) == 0)
+			flags->show_version = true;
 		i++;
 	}
 	set_ignore_patterns(flags);
@@ -74,30 +79,27 @@ void	parse_flags(t_flags *flags, size_t argc, char **argv)
 
 bool	is_valid_folder(char *name, t_flags options)
 {
-	regex_t	reg;
 	char	**pattern;
-	bool	res;
+	regex_t	reg;
 	size_t	i;
+	bool	res;
 
-	i = 0;
 	pattern = options.ignore_patterns;
+	i = 0;
 	res = true;
 	while (pattern[i])
 	{
 		if (regcomp(&reg, pattern[i], 0) != 0)
-		{
-			res = false;
-			break ;
-		}
+			return (false);
 		if (!regexec(&reg, name, 0, NULL, 0))
 		{
 			res = false;
 			break ;
 		}
+		regfree(&reg);
 		i++;
 	}
-	if (!res)
-		regfree(&reg);
+	regfree(&reg);
 	return (res);
 }
 
