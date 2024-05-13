@@ -42,7 +42,7 @@ static void	print_file(t_filedata *filedata, t_flags options, size_t name_len)
 	if (name_len >= options.col_width * tab_dim)
 		return ;
 	printf("\t");
-	printf("%zu b", filedata->size);
+	printf("%zu B", filedata->size);
 }
 
 void	print_filedata(t_filedata *filedata, t_flags options, size_t name_len)

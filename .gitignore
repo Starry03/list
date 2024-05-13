@@ -1,5 +1,5 @@
 .vscode
 
 # executables
-/list
+./list
 /install.sh

@@ -1,7 +1,13 @@
 #include "flag.h"
 #include <regex.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define N_PATTERNS 5
+#define IGNORE_HIDDEN_FILES "^[.]"
+#define IGNORE_CURRENT_DIR "^\\.$"
+#define IGNORE_PREV_DIR "^\\.\\.$"
 
 char	*get_flag(enum e_flag flag)
 {
@@ -19,22 +25,35 @@ char	*get_flag(enum e_flag flag)
 
 void	init_default_flags(t_flags *flags)
 {
-	char	**patterns;
-
-	patterns = (char **)malloc(sizeof(char *) * 2);
-	patterns[0] = 0;
-	patterns[1] = 0;
 	flags->log_dim = false;
 	flags->recursive = false;
 	flags->show_hidden = false;
 	flags->col_width = 4;
 	flags->root_path = ".";
-	flags->ignore_patterns = patterns;
+	flags->ignore_patterns = (char **)calloc(N_PATTERNS + 1, sizeof(char *));
+	flags->ignore_patterns[0] = strdup(IGNORE_HIDDEN_FILES);
+}
+
+static void	set_ignore_patterns(t_flags *flags)
+{
+	if (flags->show_hidden)
+	{
+		free(flags->ignore_patterns[0]);
+		flags->ignore_patterns[0] = NULL;
+	}
+	if (flags->recursive)
+	{
+		if (flags->ignore_patterns[0])
+			return ;
+		flags->ignore_patterns[0] = strdup(IGNORE_CURRENT_DIR);
+		flags->ignore_patterns[1] = strdup(IGNORE_PREV_DIR);
+	}
 }
 
 void	parse_flags(t_flags *flags, size_t argc, char **argv)
 {
-	size_t i;
+	size_t	i;
+
 	if (argc < 2)
 		return ;
 	if (argv[1][0] != '-')
@@ -45,31 +64,27 @@ void	parse_flags(t_flags *flags, size_t argc, char **argv)
 		if (strcmp(argv[i], get_flag(LOG_DIM)) == 0)
 			flags->log_dim = true;
 		else if (strcmp(argv[i], get_flag(RECURSIVE)) == 0)
-		{
 			flags->recursive = true;
-			// cannot start with a dot
-			flags->ignore_patterns[0] = "^\\.";
-		}
 		else if (strcmp(argv[i], get_flag(SHOW_HIDDEN)) == 0)
-		{
 			flags->show_hidden = true;
-			flags->ignore_patterns[0] = "^$";
-		}
 		i++;
 	}
+	set_ignore_patterns(flags);
 }
 
 bool	is_valid_folder(char *name, t_flags options)
 {
 	regex_t	reg;
-	size_t	i;
+	char	**pattern;
 	bool	res;
+	size_t	i;
 
-	res = true;
 	i = 0;
-	while (options.ignore_patterns[i])
+	pattern = options.ignore_patterns;
+	res = true;
+	while (pattern[i])
 	{
-		if (regcomp(&reg, options.ignore_patterns[i], 0) != 0)
+		if (regcomp(&reg, pattern[i], 0) != 0)
 		{
 			res = false;
 			break ;
@@ -81,7 +96,20 @@ bool	is_valid_folder(char *name, t_flags options)
 		}
 		i++;
 	}
-	if (i)
+	if (!res)
 		regfree(&reg);
 	return (res);
+}
+
+void	flags_free(t_flags *flags)
+{
+	size_t	i;
+
+	i = 0;
+	while (flags->ignore_patterns[i])
+	{
+		free(flags->ignore_patterns[i]);
+		i++;
+	}
+	free(flags->ignore_patterns);
 }
