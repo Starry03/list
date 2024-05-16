@@ -1,7 +1,7 @@
 #include "list.h"
 #include <stdio.h>
 
-#define VERSION "Version 1.4"
+#define VERSION "Version 1.5"
 #define PRINT_VERSION printf("%s\n", VERSION)
 
 int	main(int argc, char **argv)
