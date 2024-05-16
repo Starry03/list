@@ -1,0 +1,10 @@
+js \uf2ee
+java \ue738
+py \ue73c
+c \ue61e
+h \uf1dc
+cpp \ue61d
+cs \ue648
+rb \ue791
+rs \ue7a8
+go \udb81\udfd3

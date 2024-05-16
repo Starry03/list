@@ -1,8 +1,9 @@
 #ifndef FILEDATA_H
 # define FILEDATA_H
 
-#include <dirent.h>
+# include "UniC/DataStructures/Dictionary/Dictionary.h"
 # include "flag.h"
+# include <dirent.h>
 # include <stddef.h>
 
 typedef enum e_type
@@ -21,9 +22,9 @@ typedef struct s_filedata
 t_filedata	*filedata_init(char *name, t_type type, size_t size);
 bool		is_valid_type(t_type type);
 void		print_filedata(t_filedata *filedata, t_flags options,
-				size_t name_len);
+				size_t name_len, t_dict icons);
 t_filedata	*filedata_get_from_file(struct dirent *d, char *path,
-		bool calc_size);
+				bool calc_size);
 
 # define filedata_free(filedata) free(filedata);
 

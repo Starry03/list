@@ -18,24 +18,25 @@ bool	is_printable(t_filedata *filedata, t_flags flags)
 }
 
 static void	print_folder_core(char *folder_name, size_t folder_level,
-		t_filedata *filedata, t_flags flags)
+		t_filedata *filedata, t_flags flags, t_dict icons)
 {
 	size_t	name_len;
 	char	*buf;
 
 	name_len = strlen(filedata->name);
-	print_filedata(filedata, flags, name_len);
+	print_filedata(filedata, flags, name_len, icons);
 	if (filedata->type == T_DIR && flags.recursive)
 	{
 		buf = build_path(folder_name, filedata->name);
-		print_folder(buf, folder_level + 1, flags);
+		print_folder(buf, folder_level + 1, flags, icons);
 		free(buf);
 	}
 	else if (filedata->type != T_DIR)
 		printf("\n");
 }
 
-void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
+void	print_folder(char *folder_name, size_t folder_level, t_flags flags,
+		t_dict icons)
 {
 	DIR				*dir;
 	t_filedata		*filedata;
@@ -70,7 +71,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 		}
 		else
 			ft_print_n('\t', folder_level);
-		print_folder_core(folder_name, folder_level, filedata, flags);
+		print_folder_core(folder_name, folder_level, filedata, flags, icons);
 		filedata_free(filedata);
 	}
 	free(dirent_dir);
