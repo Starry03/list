@@ -4,7 +4,6 @@
 #include <dirent.h>
 # include "flag.h"
 # include <stddef.h>
-# include <stdio.h>
 
 typedef enum e_type
 {

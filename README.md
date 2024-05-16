@@ -1,7 +1,5 @@
 # List
 
-### Desc
-
 Inspired by 'ls' unix command
 
 Provides a better tree representation
@@ -10,38 +8,31 @@ Provides a better tree representation
 
 - Nerdfont https://www.nerdfonts.com/font-downloads
 
-### Bug
+### TODO
 
-Aligning text is not for me
+- add icons for more files
+
+### Minor bugs
+
+- size align
 
 ### Install
 
-Add the following line to ~/.bashrc
+#### Linux
 
 ```sh
-alias [name]="<path to list executable>"
-```
-run
-```sh
-source ~/.bashrc
+cd <this folder>
+sh ./install.sh
 ```
 
 ### Usage
-
-compile
-```
-cd <this folder>
-make
-```
-
-run
-```
-./list <path> <flags separated by space>
+``` bash
+list <path> <flags separated by space>
 ```
 
 #### Flags
 
+- ```-R``` recursive 
 - ```-d``` displays file size
-- ```-R``` recursive
 - ```-a``` hidden files
 - ```-V``` version
