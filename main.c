@@ -1,6 +1,8 @@
-#include "printfolder.h"
+#include "list.h"
 #include <stdio.h>
-#include <stdlib.h>
+
+#define VERSION "Version 1.4"
+#define PRINT_VERSION printf("%s\n", VERSION)
 
 int	main(int argc, char **argv)
 {
@@ -11,7 +13,7 @@ int	main(int argc, char **argv)
 	if (!flags.show_version)
 		print_folder(flags.root_path, ROOT_LEVEL, flags);
 	else
-		printf("Version 1.4\n");
+		PRINT_VERSION;
 	flags_free(&flags);
 	return (0);
 }

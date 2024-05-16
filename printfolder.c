@@ -1,7 +1,7 @@
 #include "colors.h"
 #include "filedata.h"
 #include "flag.h"
-#include "printfolder.h"
+#include "list.h"
 #include "utils.h"
 #include <dirent.h>
 #include <stdlib.h>
@@ -17,17 +17,22 @@ bool	is_printable(t_filedata *filedata, t_flags flags)
 		&& is_valid_folder(filedata->name, flags));
 }
 
-t_filedata	*filedata_get_from_file(struct dirent *d, char *path)
+static void	print_folder_core(char *folder_name, size_t folder_level,
+		t_filedata *filedata, t_flags flags)
 {
-	t_filedata	*filedata;
-	FILE		*file;
+	size_t	name_len;
+	char	*buf;
 
-	file = fopen(path, "r");
-	if (!file)
-		return (NULL);
-	filedata = filedata_init(d->d_name, d->d_type, file);
-	fclose(file);
-	return (filedata);
+	name_len = strlen(filedata->name);
+	print_filedata(filedata, flags, name_len);
+	if (filedata->type == T_DIR && flags.recursive)
+	{
+		buf = build_path(folder_name, filedata->name);
+		print_folder(buf, folder_level + 1, flags);
+		free(buf);
+	}
+	else if (filedata->type != T_DIR)
+		printf("\n");
 }
 
 void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
@@ -37,7 +42,6 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 	struct dirent	*dirent_dir;
 	char			*buf;
 	bool			is_first;
-	size_t			name_len;
 
 	is_first = true;
 	dir = opendir(folder_name);
@@ -51,7 +55,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 			free(dirent_dir);
 			continue ;
 		}
-		filedata = filedata_get_from_file(dirent_dir, buf);
+		filedata = filedata_get_from_file(dirent_dir, buf, flags.log_dim);
 		free(buf);
 		if (!is_printable(filedata, flags))
 		{
@@ -66,16 +70,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags)
 		}
 		else
 			ft_print_n('\t', folder_level);
-		name_len = strlen(filedata->name);
-		print_filedata(filedata, flags, name_len);
-		if (filedata->type == T_DIR && flags.recursive)
-		{
-			buf = build_path(folder_name, filedata->name);
-			print_folder(buf, folder_level + 1, flags);
-			free(buf);
-		}
-		else if (filedata->type != T_DIR)
-			printf("\n");
+		print_folder_core(folder_name, folder_level, filedata, flags);
 		filedata_free(filedata);
 	}
 	free(dirent_dir);

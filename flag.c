@@ -44,10 +44,9 @@ static void	set_ignore_patterns(t_flags *flags)
 		free(flags->ignore_patterns[0]);
 		flags->ignore_patterns[0] = NULL;
 	}
-	if (flags->recursive)
+	
+	if (flags->recursive && !flags->ignore_patterns[0])
 	{
-		if (flags->ignore_patterns[0])
-			return ;
 		flags->ignore_patterns[0] = strdup(IGNORE_CURRENT_DIR);
 		flags->ignore_patterns[1] = strdup(IGNORE_PREV_DIR);
 	}

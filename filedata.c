@@ -4,7 +4,7 @@
 #include "utils.h"
 #include <stdlib.h>
 
-t_filedata	*filedata_init(char *name, t_type type, FILE *file)
+t_filedata	*filedata_init(char *name, t_type type, size_t size)
 {
 	t_filedata	*addr;
 
@@ -13,13 +13,8 @@ t_filedata	*filedata_init(char *name, t_type type, FILE *file)
 		return (NULL);
 	addr->name = name;
 	addr->type = type;
-	addr->size = get_size(file);
+	addr->size = size;
 	return (addr);
-}
-
-void	filedata_free(t_filedata *filedata)
-{
-	free(filedata);
 }
 
 bool	is_valid_type(t_type type)
@@ -58,4 +53,25 @@ void	print_filedata(t_filedata *filedata, t_flags options, size_t name_len)
 	default:
 		break ;
 	}
+}
+
+t_filedata	*filedata_get_from_file(struct dirent *d, char *path,
+		bool calc_size)
+{
+	t_filedata	*filedata;
+	FILE		*file;
+	size_t		size;
+
+	// TO-DO: opt
+	size = 0;
+	if (calc_size)
+	{
+		file = fopen(path, "r");
+		if (!file)
+			return (NULL);
+		size = get_size(file);
+		fclose(file);
+	}
+	filedata = filedata_init(d->d_name, d->d_type, size);
+	return (filedata);
 }
