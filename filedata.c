@@ -41,11 +41,11 @@ static void	print_file(t_filedata *filedata, t_flags options, size_t name_len,
 	char			*icon;
 
 	file_extension = file_get_extension(filedata->name);
-	icon = (char *) Dict_Get(icons, file_extension);
+	icon = (char *)Dict_Get(icons, file_extension);
 	if (!icon)
-		icon = " ";
-
-	printf("%s %s", icon, filedata->name);
+		printf("%s", filedata->name);
+	else
+		printf("%s %s", icon, filedata->name);
 	if (!options.log_dim)
 		return ;
 	if (name_len >= options.col_width * tab_dim)

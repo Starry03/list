@@ -7,7 +7,7 @@
 
 void	init(t_dict *icons)
 {
-	const char *ICONS_PATH = "./iconst.txt";
+	const char *ICONS_PATH = "./icons.txt";
 	FILE *icons_file;
 	char buf[BUFSIZE];
 	char *key, *value;
