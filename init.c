@@ -1,4 +1,5 @@
 #include "UniC/libft/libft.h"
+#include "UniC/Utils/Hashing/HashFunctions.h"
 #include "list.h"
 #include <stdio.h>
 #include <string.h>
@@ -21,7 +22,7 @@ void	init(t_dict *icons)
 		value = ft_strdup(strtok(NULL, " "));
 		if (strrchr(value, '\n'))
 			*strrchr(value, '\n') = '\0';
-		Dict_Add(icons, key, value, &free, &free);
+		Dict_Add(icons, key, value, hash_string, &free, &free);
 	}
 	fclose(icons_file);
 }

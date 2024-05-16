@@ -1,7 +1,7 @@
+c \ue61e
 js \uf2ee
 java \ue738
 py \ue73c
-c \ue61e
 h \uf1dc
 cpp \ue61d
 cs \ue648

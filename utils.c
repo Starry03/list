@@ -1,3 +1,4 @@
+#include "UniC/Utils/types.h"
 #include "utils.h"
 #include <stdlib.h>
 #include <string.h>
@@ -33,4 +34,9 @@ void	ft_print_n(char c, size_t n)
 	i = 0;
 	while (i++ < n)
 		printf("%c", c);
+}
+
+int	string_compare(Generic a, Generic b)
+{
+	return (strcmp((char *)a, (char *)b));
 }

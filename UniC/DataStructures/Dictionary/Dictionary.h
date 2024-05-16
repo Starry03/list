@@ -23,15 +23,19 @@ typedef struct s_dict_obj
 	Generic				value;
 	void				(*dealloc_key)(Generic);
 	void				(*dealloc_value)(Generic);
+	size_t				(*hash_key)(Generic, size_t);
 }						t_dict_obj;
 
 typedef t_dict_obj		*Dict_obj;
 
 t_dict					Dict_Init(size_t size);
 void					Dict_Add(t_dict *dict, Generic key, Generic value,
+							size_t (*hash_key)(Generic, size_t),
 							void (*dealloc_key)(Generic),
 							void (*dealloc_value)(Generic));
-void					*Dict_Get(t_dict dict, Generic key);
+void					*Dict_Get(t_dict dict, Generic key,
+							size_t (*hash_key)(Generic, size_t),
+							int (*cmp)(Generic, Generic));
 void					Dict_Remove(t_dict dict, Generic key);
 void					Dict_Free(t_dict dict);
 

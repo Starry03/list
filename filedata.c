@@ -4,6 +4,7 @@
 #include "utils.h"
 #include <stdlib.h>
 #include <string.h>
+#include "UniC/Utils/Hashing/HashFunctions.h"
 
 t_filedata	*filedata_init(char *name, t_type type, size_t size)
 {
@@ -25,7 +26,12 @@ bool	is_valid_type(t_type type)
 
 char	*file_get_extension(char *name)
 {
-	return (strrchr(name, '.'));
+	char *index;
+
+	index = strrchr(name, '.');
+	if (!index)
+		return (NULL);
+	return (index + 1);
 }
 
 static void	print_dir(t_filedata *filedata)
@@ -38,14 +44,16 @@ static void	print_file(t_filedata *filedata, t_flags options, size_t name_len,
 {
 	const size_t	tab_dim = 4;
 	char			*file_extension;
-	char			*icon;
+	char			*icon = NULL;
 
 	file_extension = file_get_extension(filedata->name);
-	icon = (char *)Dict_Get(icons, file_extension);
+	if (file_extension)
+		icon = (char *)Dict_Get(icons, file_extension, hash_string, string_compare);
 	if (!icon)
 		printf("%s", filedata->name);
 	else
 		printf("%s %s", icon, filedata->name);
+	// dimension
 	if (!options.log_dim)
 		return ;
 	if (name_len >= options.col_width * tab_dim)

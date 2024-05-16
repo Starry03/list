@@ -2,7 +2,7 @@ CC = gcc
 FLAGS = -Wall -Werror -Wextra
 OPT = -O3
 NAME = list
-PROGRAM_FLAGS = -a -R -d
+PROGRAM_FLAGS =
 
 UNIC = ./UniC/UniC.a -I./UniC
 

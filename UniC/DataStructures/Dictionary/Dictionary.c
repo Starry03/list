@@ -21,7 +21,8 @@ static inline t_dict	Dict_alloc(void)
 }
 
 static Dict_obj	Dict_Obj_Init(Generic key, Generic value,
-		void (*dealloc_key)(Generic), void (*dealloc_value)(Generic))
+		size_t (*hash_key)(Generic, size_t), void (*dealloc_key)(Generic),
+		void (*dealloc_value)(Generic))
 {
 	Dict_obj	obj;
 
@@ -32,6 +33,7 @@ static Dict_obj	Dict_Obj_Init(Generic key, Generic value,
 	obj->value = value;
 	obj->dealloc_key = dealloc_key;
 	obj->dealloc_value = dealloc_value;
+	obj->hash_key = hash_key;
 	return (obj);
 }
 
@@ -111,8 +113,8 @@ t_dict	Dict_Realloc(t_dict old_dict)
 		while (current_bucket)
 		{
 			obj = current_bucket->info;
-			Dict_Add(&new_dict, obj->key, obj->value, obj->dealloc_key,
-				obj->dealloc_value);
+			Dict_Add(&new_dict, obj->key, obj->value, obj->hash_key,
+				obj->dealloc_key, obj->dealloc_value);
 			current_bucket = LinkedList_GetNext(current_bucket);
 		}
 		i++;
@@ -132,9 +134,11 @@ t_dict	Dict_Realloc(t_dict old_dict)
  * @param dealloc_value null if is a value
  */
 void	Dict_Add(t_dict *dict, Generic key, Generic value,
-		void (*dealloc_key)(Generic), void (*dealloc_value)(Generic))
+		size_t (*hash_key)(Generic, size_t), void (*dealloc_key)(Generic),
+		void (*dealloc_value)(Generic))
 {
-	const size_t	hash = hash_generic(key, (*dict)->size);
+	const size_t	hash = hash_generic(hash_key(key, (*dict)->size),
+				(*dict)->size);
 	LinkedList		*buckets;
 	t_dict			d;
 	Dict_obj		obj;
@@ -148,7 +152,7 @@ void	Dict_Add(t_dict *dict, Generic key, Generic value,
 		return ;
 	}
 	buckets = d->buckets;
-	obj = Dict_Obj_Init(key, value, dealloc_key, dealloc_value);
+	obj = Dict_Obj_Init(key, value, hash_key, dealloc_key, dealloc_value);
 	if (!obj)
 		return ;
 	LinkedList_Push(buckets + hash, obj);
@@ -162,15 +166,21 @@ void	Dict_Add(t_dict *dict, Generic key, Generic value,
  * @param key
  * @return void*
  */
-void	*Dict_Get(t_dict dict, Generic key)
+void	*Dict_Get(t_dict dict, Generic key, size_t (*hash_key)(Generic, size_t),
+		int (*cmp)(Generic, Generic))
 {
-	const size_t	hash = hash_generic(key, dict->size);
+	const size_t	hash = hash_generic(hash_key(key, dict->size), dict->size);
 	LinkedList		bucket;
+	Dict_obj		obj;
 
 	bucket = (dict->buckets)[hash];
-	while (((Dict_obj)LinkedList_GetInfo(bucket))->key != key)
+	while (LinkedList_GetInfo(bucket)
+		&& cmp(((Dict_obj)LinkedList_GetInfo(bucket))->key, key))
 		bucket = LinkedList_GetNext(bucket);
-	return (((Dict_obj)LinkedList_GetInfo(bucket))->value);
+	obj = (Dict_obj)LinkedList_GetInfo(bucket);
+	if (!obj)
+		return (NULL);
+	return (obj->value);
 }
 
 /**
@@ -181,7 +191,7 @@ void	*Dict_Get(t_dict dict, Generic key)
  */
 void	Dict_Remove(t_dict dict, Generic key)
 {
-	const size_t	hash = hash_generic(key, dict->size);
+	const size_t	hash = hash_generic((size_t)key, dict->size);
 	LinkedList		bucket;
 
 	bucket = (dict->buckets)[hash];

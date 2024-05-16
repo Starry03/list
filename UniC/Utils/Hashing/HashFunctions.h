@@ -21,6 +21,6 @@ size_t hash_char(void *key, size_t size);
 
 size_t hash_string(void *key, size_t size);
 
-size_t hash_generic(Generic addr, size_t size);
+size_t hash_generic(size_t addr, size_t size);
 
 #endif //STARRY_CLIBRARY_HASHFUNCTIONS_H
