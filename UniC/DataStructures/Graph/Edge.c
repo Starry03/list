@@ -1,4 +1,6 @@
 #include "Edge.h"
+#include "Utils/types.h"
+#include <stdlib.h>
 
 Edge	Edge_Init(GraphNode from, GraphNode to, size_t weight)
 {

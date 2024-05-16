@@ -89,11 +89,7 @@ void	GraphNode_AddDoubleEdge(GraphNode from, GraphNode to, size_t weight,
 	GraphNode_AddEdge(from, to, weight);
 	GraphNode_AddEdge(to, from, weight2);
 }
-void	GraphNode_RemoveDoubleEdge(GraphNode from, GraphNode to)
-{
-	GraphNode_RemoveEdge(from, to);
-	GraphNode_RemoveEdge(to, from);
-}
+void	GraphNode_RemoveDoubleEdge(GraphNode from, GraphNode to);
 
 bool	GraphNode_Cmp(GraphNode a, GraphNode b)
 {

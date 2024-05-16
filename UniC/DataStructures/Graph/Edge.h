@@ -3,15 +3,7 @@
 
 # include "GraphNode.h"
 # include "Utils/types.h"
-
-typedef struct s_edge
-{
-	GraphNode	from;
-	GraphNode	to;
-	size_t		weight;
-}				t_edge;
-
-typedef t_edge	*Edge;
+# include <stddef.h>
 
 Edge			Edge_Init(GraphNode from, GraphNode to, size_t weight);
 void			Edge_Free(Generic edge);

@@ -1,0 +1,14 @@
+# folders
+cmake-build-debug
+.idea
+.vscode
+build/
+
+# files
+CMakeLists.txt
+*.xml
+*.iml
+run.sh
+main.c
+*.a
+*.o

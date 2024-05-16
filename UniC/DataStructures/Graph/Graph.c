@@ -52,18 +52,18 @@ void	Graph_AddEdge(GraphNode from, GraphNode to, size_t weight)
 	GraphNode_AddEdge(from, to, weight);
 }
 
-void	Graph_RemoveEdge(GraphNode from, GraphNode to)
+void	Graph_RemoveEdge(GraphNode from, Edge edge)
 {
-	GraphNode_RemoveEdge(from, to);
+	GraphNode_RemoveEdge(from, edge);
 }
 
-void	GraphNode_AddDoubleEdge(GraphNode from, GraphNode to, size_t weight,
+void	Graph_AddDoubleEdge(GraphNode from, GraphNode to, size_t weight,
 		size_t weight2)
 {
 	GraphNode_AddDoubleEdge(from, to, weight, weight2);
 }
 
-void	GraphNode_RemoveDoubleEdge(GraphNode from, GraphNode to)
+void	Graph_RemoveDoubleEdge(GraphNode from, GraphNode to)
 {
 	GraphNode_RemoveDoubleEdge(from, to);
 }

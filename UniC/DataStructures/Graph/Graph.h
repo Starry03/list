@@ -18,12 +18,12 @@ void					Graph_Free(Graph graph);
 void					Graph_AddEdge(GraphNode from, GraphNode to,
 							size_t weight);
 
-void					Graph_RemoveEdge(GraphNode from, GraphNode to);
+void					Graph_RemoveEdge(GraphNode from, Edge edge);
 
-void					GraphNode_AddDoubleEdge(GraphNode from, GraphNode to,
+void					Graph_AddDoubleEdge(GraphNode from, GraphNode to,
 							size_t weight, size_t weight2);
 
-void					GraphNode_RemoveDoubleEdge(GraphNode from,
+void					Graph_RemoveDoubleEdge(GraphNode from,
 							GraphNode to);
 
 #endif // !GRAPH_H
