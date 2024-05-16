@@ -62,7 +62,6 @@ t_filedata	*filedata_get_from_file(struct dirent *d, char *path,
 	FILE		*file;
 	size_t		size;
 
-	// TO-DO: opt
 	size = 0;
 	if (calc_size)
 	{
