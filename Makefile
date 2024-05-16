@@ -4,7 +4,10 @@ OPT = -O3
 NAME = list
 PROGRAM_FLAGS = -a -R -d
 
+UNIC = ./UniC/UniC.a -I./UniC
+
 all:
+	cd UniC && make re
 	$(CC) $(FLAGS) $(OPT) *.c -o $(NAME)
 
 valgrind: all
