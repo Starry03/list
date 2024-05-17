@@ -1,10 +1,23 @@
-c 
-js 
-java 
-py 
-h 
-cpp 
-cs 󰌛
-rb 
-rs 
-go 󰟓
+c  blue
+js  yellow
+java  red
+conf  gray
+py  yellow
+h  purple
+cpp  blue
+cs 󰌛 blue
+rb  red
+rs  red
+go 󰟓 cyan
+php  purple
+lua  blue
+sh  green
+html  orange
+css  blue
+xml  blue
+json  cyan
+yaml  gray
+md  blue
+txt  gray
+yml  gray
+exe  blue
