@@ -11,7 +11,7 @@ static size_t	normalize(size_t bytes, size_t size)
 	return (bytes % size);
 }
 
-size_t	hash_string(Generic *key, size_t size)
+size_t	hash_string(Generic key, size_t size)
 {
 	size_t	hash;
 	char	*str;
