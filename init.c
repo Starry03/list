@@ -1,14 +1,18 @@
-#include "UniC/libft/libft.h"
 #include "UniC/Utils/Hashing/HashFunctions.h"
+#include "UniC/libft/libft.h"
 #include "list.h"
 #include <stdio.h>
 #include <string.h>
+
+#ifndef ICON_PATH
+# define ICON_PATH "./icons.txt"
+#endif
 
 #define BUFSIZE 64
 
 void	init(t_dict *icons)
 {
-	const char *ICONS_PATH = "./icons.txt";
+	const char *ICONS_PATH = ICON_PATH;
 	FILE *icons_file;
 	char buf[BUFSIZE];
 	char *key, *value;
