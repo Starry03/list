@@ -30,7 +30,7 @@ void	init_default_flags(t_flags *flags)
 	flags->log_dim = false;
 	flags->recursive = false;
 	flags->show_hidden = false;
-	flags->col_width = 4;
+	flags->col_width = 20;
 	flags->show_version = false;
 	flags->root_path = ".";
 	flags->ignore_patterns = (char **)calloc(N_PATTERNS + 1, sizeof(char *));

@@ -2,7 +2,7 @@
 #include "theme.h"
 #include <stdio.h>
 
-#define VERSION "Version 1.8"
+#define VERSION "Version 2"
 #define PRINT_VERSION printf("%s\n", VERSION)
 
 int	main(int argc, char **argv)

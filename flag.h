@@ -22,7 +22,7 @@ typedef struct s_flags
 	bool	recursive;
 	bool	show_hidden;
 	bool	show_version;
-	size_t	col_width;
+	int		col_width;
 	char	*root_path;
 	char	**ignore_patterns;
 }			t_flags;

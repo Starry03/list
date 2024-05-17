@@ -4,17 +4,19 @@ Inspired by 'ls' unix command
 
 Provides a better tree representation
 
+Version 2
+
 ### Requirements
 
 - Nerdfont https://www.nerdfonts.com/font-downloads
 
 ### TODO
 
-- add icons for more files
+- themes (only default is available now)
 
 ### Minor bugs
 
-- size align
+- size align breaks with large names
 
 ### Install
 

@@ -1,10 +1,10 @@
+#include "UniC/Utils/Hashing/HashFunctions.h"
 #include "colors.h"
 #include "filedata.h"
 #include "flag.h"
 #include "utils.h"
 #include <stdlib.h>
 #include <string.h>
-#include "UniC/Utils/Hashing/HashFunctions.h"
 
 t_filedata	*filedata_init(char *name, t_type type, size_t size)
 {
@@ -26,7 +26,7 @@ bool	is_valid_type(t_type type)
 
 char	*file_get_extension(char *name)
 {
-	char *index;
+	char	*index;
 
 	index = strrchr(name, '.');
 	if (!index)
@@ -39,36 +39,37 @@ static void	print_dir(t_filedata *filedata)
 	printf("%s\ue5ff %s%s\n", YELLOW, STD_COLOR, filedata->name);
 }
 
-static void	print_file(t_filedata *filedata, t_flags options, size_t name_len,
-		t_dict icons)
+static void	print_file(t_filedata *filedata, t_flags options, t_dict icons)
 {
-	const size_t	tab_dim = 4;
-	char			*file_extension;
-	char			*icon = NULL;
+	char	*file_extension;
+	char	*icon;
+	int		col_width;
+	size_t	name_len;
 
+	col_width = options.col_width;
+	name_len = strlen(filedata->name);
+	while ((size_t)col_width < name_len)
+		col_width *= 2;
+	icon = NULL;
 	file_extension = file_get_extension(filedata->name);
 	if (file_extension)
-		icon = (char *)Dict_Get(icons, file_extension, hash_string, string_compare);
+		icon = (char *)Dict_Get(icons, file_extension, hash_string,
+				string_compare);
 	if (!icon)
-		printf("%s", filedata->name);
+		printf("%-*s", col_width, filedata->name);
 	else
-		printf("%s %s", icon, filedata->name);
-	// dimension
+		printf("%s %-*s", icon, col_width - 2, filedata->name);
 	if (!options.log_dim)
 		return ;
-	if (name_len >= options.col_width * tab_dim)
-		return ;
-	printf("\t");
 	printf("%zu B", filedata->size);
 }
 
-void	print_filedata(t_filedata *filedata, t_flags options, size_t name_len,
-		t_dict icons)
+void	print_filedata(t_filedata *filedata, t_flags options, t_dict icons)
 {
 	switch (filedata->type)
 	{
 	case T_FILE:
-		print_file(filedata, options, name_len, icons);
+		print_file(filedata, options, icons);
 		break ;
 	case T_DIR:
 		print_dir(filedata);

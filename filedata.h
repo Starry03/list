@@ -21,8 +21,7 @@ typedef struct s_filedata
 
 t_filedata	*filedata_init(char *name, t_type type, size_t size);
 bool		is_valid_type(t_type type);
-void		print_filedata(t_filedata *filedata, t_flags options,
-				size_t name_len, t_dict icons);
+void		print_filedata(t_filedata *filedata, t_flags options, t_dict icons);
 t_filedata	*filedata_get_from_file(struct dirent *d, char *path,
 				bool calc_size);
 
