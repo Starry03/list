@@ -15,7 +15,7 @@ sh  green
 html  orange
 css  blue
 xml  blue
-json  cyan
+json  yellow
 yaml  gray
 md  blue
 txt  gray
