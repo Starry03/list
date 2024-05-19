@@ -47,3 +47,8 @@ list <path> <flags separated by space>
 - ```-d``` displays file size
 - ```-a``` hidden files
 - ```-V``` version
+
+### ls vs list
+
+- list takes about 2x ram
+- speed is really close to ls, difference could be measured in ms
