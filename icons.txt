@@ -1,7 +1,11 @@
+# dev
 c  blue
 js  yellow
 java  red
-conf  gray
+class  red
+jar  red
+kotlin  purple
+swift  orange
 py  yellow
 h  purple
 cpp  blue
@@ -10,14 +14,59 @@ rb  red
 rs  red
 go 󰟓 cyan
 php  purple
+json  yellow
 lua  blue
-sh  green
+md  blue
 html  orange
 css  blue
+git  red
+# generic
 xml  blue
-json  yellow
 yaml  gray
-md  blue
 txt  gray
 yml  gray
+dll  blue
+conf  gray
+# windows executables
 exe  blue
+msi  blue
+bat  green
+# linux executables
+cmd  green
+sh  green
+# macos executables
+app  blue
+# images
+jpg  green
+jpeg  green
+png  green
+gif  green
+bmp  green
+tiff  green
+# videos
+mp4  blue
+avi  blue
+mkv  blue
+# audio
+mp3 󱑽 green
+wav 󱑽 green
+flac 󱑽 green
+# documents
+pdf  red
+doc  blue
+docx  blue
+xls  green
+xlsx  green
+ppt  orange
+pptx  orange
+# archives
+zip  yellow
+tar  yellow
+gz  yellow
+bz2  yellow
+rar  purple
+7z  yellow
+# databases
+sqlite  blue
+db  blue
+sql  blue

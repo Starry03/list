@@ -12,10 +12,10 @@
 #endif
 
 #define BUFSIZE 64
-#define ICONS_DICT_SIZE 32
+#define ICONS_DICT_SIZE 128
 
 #define ADD_COLOR(dict, name, color_code) (Dict_Add(&dict, ft_strdup(name),\
-		ft_strdup(color_code), hash_string, free, free))
+		ft_strdup(color_code), &hash_string, &free, &free, &string_compare))
 
 /**
  * @brief Initialize the colors dictionary
@@ -62,6 +62,8 @@ static Theme	theme_parser(const char *config_path)
 		return (NULL);
 	while (fgets(buf, BUFSIZE, icons_file))
 	{
+		if (*buf == '#' || *buf == '\n')
+			continue ;
 		key_buf = ft_strdup(strtok(buf, " "));
 		icon_buf = strtok(NULL, " ");
 		color_buf = strtok(NULL, " ");
@@ -70,7 +72,10 @@ static Theme	theme_parser(const char *config_path)
 		color_buf = Dict_Get(colors, color_buf, hash_string, string_compare);
 		color_buf = ft_strjoin(color_buf, icon_buf);
 		color_buf = ft_strfjoin(color_buf, STD_COLOR);
-		Dict_Add(&theme->icons, key_buf, color_buf, hash_string, &free, &free);
+		if (Dict_Add(&theme->icons, key_buf, color_buf, &hash_string, &free, &free, &string_compare))
+			continue;
+		free(key_buf);
+		free(color_buf);
 	}
 	fclose(icons_file);
 	Dict_Free(colors);
