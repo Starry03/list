@@ -1,10 +1,19 @@
 # List
 
-Inspired by 'ls' unix command
 
-Provides a better tree representation
+A better version of 'ls'
+
+- better tree representation
+
+- icons
 
 Version 2
+
+### Screenshots
+
+![alt text](screenshots/image.png)
+
+![alt text](screenshots/image-2.png)
 
 ### Requirements
 
