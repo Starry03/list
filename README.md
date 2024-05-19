@@ -13,7 +13,7 @@ Version 2
 
 ![alt text](screenshots/image.png)
 
-![alt text](screenshots/image-2.png)
+![alt text](screenshots/image%20copy.png)
 
 ### Requirements
 
