@@ -3,6 +3,8 @@
 #include "filedata.h"
 #include "flag.h"
 #include "utils.h"
+#include "wchar.h"
+#include <locale.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -59,8 +61,8 @@ static void	print_file(t_filedata *filedata, t_flags options, t_dict icons)
 		printf("%-*s", col_width, filedata->name);
 	else
 		printf("%s %-*s", icon, col_width - 2, filedata->name);
-	if (!options.log_dim)
-		return ;
+  if (!options.log_dim) 
+	  return ;
 	printf("%zu B", filedata->size);
 }
 
