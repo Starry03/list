@@ -21,6 +21,10 @@ md  blue
 html  orange
 css  blue
 git  red
+sqlite  blue
+db  blue
+sql  blue
+tex  blue
 # generic
 xml  blue
 yaml  gray
@@ -28,14 +32,16 @@ txt  gray
 yml  gray
 dll  blue
 conf  gray
-# windows executables
+iso  gray
+# windows
 exe  blue
 msi  blue
 bat  green
-# linux executables
+# linux
 cmd  green
 sh  green
-# macos executables
+service  gray
+# macos
 app  blue
 # images
 jpg  green
@@ -67,7 +73,8 @@ gz  yellow
 bz2  yellow
 rar  purple
 7z  yellow
-# databases
-sqlite  blue
-db  blue
-sql  blue
+# fonts
+ttf  red
+otf  red
+woff  red
+woff2  red
