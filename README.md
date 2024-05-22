@@ -7,7 +7,7 @@ A better version of 'ls'
 
 - icons
 
-![alt text](image.png)
+![alt text](./screenshots/image.png)
 
 Version 2
 
