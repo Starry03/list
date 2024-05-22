@@ -14,8 +14,7 @@
 #define BUFSIZE 64
 #define ICONS_DICT_SIZE 128
 
-#define ADD_COLOR(dict, name, color_code) (Dict_Add(&dict, ft_strdup(name),\
-		ft_strdup(color_code), &hash_string, &free, &free, &string_compare))
+#define ADD_COLOR(dict, name, color_code) (Dict_Add(&dict, ft_strdup(name), ft_strdup(color_code), &hash_string, &free, &free, &string_compare))
 
 /**
  * @brief Initialize the colors dictionary
@@ -66,14 +65,26 @@ static Theme	theme_parser(const char *config_path)
 			continue ;
 		key_buf = ft_strdup(strtok(buf, " "));
 		icon_buf = strtok(NULL, " ");
+		if (!icon_buf)
+		{
+			free(key_buf);
+			continue ;
+		}
 		color_buf = strtok(NULL, " ");
+		if (!color_buf)
+		{
+			free(key_buf);
+			free(icon_buf);
+			continue ;
+		}
 		if (strrchr(color_buf, '\n'))
 			*strrchr(color_buf, '\n') = '\0';
 		color_buf = Dict_Get(colors, color_buf, hash_string, string_compare);
 		color_buf = ft_strjoin(color_buf, icon_buf);
 		color_buf = ft_strfjoin(color_buf, STD_COLOR);
-		if (Dict_Add(&theme->icons, key_buf, color_buf, &hash_string, &free, &free, &string_compare))
-			continue;
+		if (Dict_Add(&theme->icons, key_buf, color_buf, &hash_string, &free,
+				&free, &string_compare))
+			continue ;
 		free(key_buf);
 		free(color_buf);
 	}

@@ -9,7 +9,7 @@
 #define IGNORE_CURRENT_DIR "^\\.$"
 #define IGNORE_PREV_DIR "^\\.\\.$"
 
-#define HAS_FLAG(FLAG) strstr(argv[1], get_flag(FLAG));
+#define HAS_FLAG(FLAG, i) strstr(argv[i], get_flag(FLAG));
 
 char	*get_flag(enum e_flag flag)
 {
@@ -58,15 +58,21 @@ static void	set_ignore_patterns(t_flags *flags)
 
 void	parse_flags(t_flags *flags, size_t argc, char **argv)
 {
+	size_t	i;
+
+	i = 1;
 	if (argc < 2)
 		return ;
 	if (argv[1][0] != '-')
+	{
 		flags->root_path = argv[1];
-	flags->log_dim = HAS_FLAG(LOG_DIM);
-	flags->recursive = HAS_FLAG(RECURSIVE);
-	flags->show_hidden = HAS_FLAG(SHOW_HIDDEN);
-	flags->show_version = HAS_FLAG(VERSION);
-	flags->show_permissions = HAS_FLAG(PERMISSIONS);
+		i++;
+	}
+	flags->log_dim = HAS_FLAG(LOG_DIM, i);
+	flags->recursive = HAS_FLAG(RECURSIVE, i);
+	flags->show_hidden = HAS_FLAG(SHOW_HIDDEN, i);
+	flags->show_version = HAS_FLAG(VERSION, i);
+	flags->show_permissions = HAS_FLAG(PERMISSIONS, i);
 	set_ignore_patterns(flags);
 }
 
