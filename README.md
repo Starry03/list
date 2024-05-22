@@ -19,10 +19,6 @@ Version 2
 
 - themes (only default is available now)
 
-### Minor bugs
-
-- size align breaks with large names
-
 ### Install
 
 #### Linux

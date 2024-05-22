@@ -46,6 +46,15 @@ char	*file_get_extension(char *name)
 	return (index + 1);
 }
 
+static char	*filename_truncated(char *name, t_flags flags)
+{
+	if (strlen(name) <= (size_t)flags.col_width)
+		return (name);
+	memset(name + flags.col_width - 6, '.', 3);
+	name[flags.col_width - 3] = '\0';
+	return (name);
+}
+
 static void	print_permissions(t_permissions *permissions, t_flags options)
 {
 	printf("%s%s%s%-*s", permissions->owner, permissions->group,
@@ -66,21 +75,20 @@ static void	print_file(t_filedata *filedata, t_flags options, t_dict icons)
 	char	*file_extension;
 	char	*icon;
 	int		col_width;
-	size_t	name_len;
+	char	*filename;
 
 	col_width = options.col_width;
-	name_len = strlen(filedata->name);
-	while ((size_t)col_width < name_len)
-		col_width *= 2;
+	filename = filedata->name;
 	icon = NULL;
 	file_extension = file_get_extension(filedata->name);
 	if (file_extension)
 		icon = (char *)Dict_Get(icons, file_extension, hash_string,
 				string_compare);
 	if (!icon)
-		printf("%-*s", col_width, filedata->name);
+		printf("%-*s", col_width, filename_truncated(filename, options));
 	else
-		printf("%s %-*s", icon, col_width - 2, filedata->name);
+		printf("%s %-*s", icon, col_width - 2, filename_truncated(filename,
+				options));
 	if (options.show_permissions)
 		print_permissions(filedata->permissions, options);
 	if (!options.log_dim)
