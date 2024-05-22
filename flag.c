@@ -68,6 +68,8 @@ void	parse_flags(t_flags *flags, size_t argc, char **argv)
 		flags->root_path = argv[1];
 		i++;
 	}
+	if (argc < 3)
+		return ;
 	flags->log_dim = HAS_FLAG(LOG_DIM, i);
 	flags->recursive = HAS_FLAG(RECURSIVE, i);
 	flags->show_hidden = HAS_FLAG(SHOW_HIDDEN, i);

@@ -9,9 +9,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#define PRINT_PERMISSIONS(permissions) printf("%s%s%s", permissions->owner, \
-	permissions->group, permissions->others)
-
 t_filedata	*filedata_init(char *name, t_type type, size_t size,
 		t_permissions *permissions)
 {
@@ -49,11 +46,18 @@ char	*file_get_extension(char *name)
 	return (index + 1);
 }
 
+static void	print_permissions(t_permissions *permissions, t_flags options)
+{
+	printf("%s%s%s%-*s", permissions->owner, permissions->group,
+		permissions->others, options.col_width - PERMISSIONS_LENGTH, "");
+}
+
 static void	print_dir(t_filedata *filedata, t_flags options)
 {
-	printf("%s\ue5ff%s %-*s", YELLOW, STD_COLOR, options.col_width - 2, filedata->name);
+	printf("%s\ue5ff%s %-*s", YELLOW, STD_COLOR, options.col_width - 2,
+		filedata->name);
 	if (options.show_permissions)
-		PRINT_PERMISSIONS(filedata->permissions);
+		print_permissions(filedata->permissions, options);
 	putc('\n', stdout);
 }
 
@@ -78,7 +82,7 @@ static void	print_file(t_filedata *filedata, t_flags options, t_dict icons)
 	else
 		printf("%s %-*s", icon, col_width - 2, filedata->name);
 	if (options.show_permissions)
-		PRINT_PERMISSIONS(filedata->permissions);
+		print_permissions(filedata->permissions, options);
 	if (!options.log_dim)
 		return ;
 	printf("%zu B", filedata->size);

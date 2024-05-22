@@ -2,7 +2,7 @@ CC = gcc
 FLAGS = -Wall -Werror -Wextra
 OPT = -O3
 NAME = list
-PROGRAM_FLAGS =
+PROGRAM_FLAGS = test
 SRC = $(wildcard *.c)
 
 UNIC = ./UniC/UniC.a -I./UniC
