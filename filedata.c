@@ -7,18 +7,31 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-t_filedata	*filedata_init(char *name, t_type type, size_t size)
+#define PRINT_PERMISSIONS(permissions) printf("%s%s%s", permissions->owner, \
+	permissions->group, permissions->others)
+
+t_filedata	*filedata_init(char *name, t_type type, size_t size,
+		t_permissions *permissions)
 {
-	t_filedata	*addr;
+	t_filedata	*filedata;
 
-	addr = (t_filedata *)malloc(sizeof(t_filedata));
-	if (!addr)
+	filedata = (t_filedata *)malloc(sizeof(t_filedata));
+	if (!filedata)
 		return (NULL);
-	addr->name = name;
-	addr->type = type;
-	addr->size = size;
-	return (addr);
+	filedata->name = name;
+	filedata->type = type;
+	filedata->size = size;
+	filedata->permissions = permissions;
+	return (filedata);
+}
+
+void	filedata_free(t_filedata *filedata)
+{
+	if (filedata->permissions)
+		permissions_free(filedata->permissions);
+	free(filedata);
 }
 
 bool	is_valid_type(t_type type)
@@ -36,9 +49,12 @@ char	*file_get_extension(char *name)
 	return (index + 1);
 }
 
-static void	print_dir(t_filedata *filedata)
+static void	print_dir(t_filedata *filedata, t_flags options)
 {
-	printf("%s\ue5ff %s%s\n", YELLOW, STD_COLOR, filedata->name);
+	printf("%s\ue5ff%s %-*s", YELLOW, STD_COLOR, options.col_width - 2, filedata->name);
+	if (options.show_permissions)
+		PRINT_PERMISSIONS(filedata->permissions);
+	putc('\n', stdout);
 }
 
 static void	print_file(t_filedata *filedata, t_flags options, t_dict icons)
@@ -61,8 +77,10 @@ static void	print_file(t_filedata *filedata, t_flags options, t_dict icons)
 		printf("%-*s", col_width, filedata->name);
 	else
 		printf("%s %-*s", icon, col_width - 2, filedata->name);
-  if (!options.log_dim) 
-	  return ;
+	if (options.show_permissions)
+		PRINT_PERMISSIONS(filedata->permissions);
+	if (!options.log_dim)
+		return ;
 	printf("%zu B", filedata->size);
 }
 
@@ -74,22 +92,25 @@ void	print_filedata(t_filedata *filedata, t_flags options, t_dict icons)
 		print_file(filedata, options, icons);
 		break ;
 	case T_DIR:
-		print_dir(filedata);
+		print_dir(filedata, options);
 		break ;
 	default:
 		break ;
 	}
 }
 
-t_filedata	*filedata_get_from_file(struct dirent *d, char *path,
-		bool calc_size)
+t_filedata	*filedata_get_from_file(struct dirent *d, char *path, t_flags flags)
 {
-	t_filedata	*filedata;
-	FILE		*file;
-	size_t		size;
+	t_filedata		*filedata;
+	FILE			*file;
+	size_t			size;
+	t_permissions	*permissions;
 
+	permissions = NULL;
 	size = 0;
-	if (calc_size)
+	if (flags.show_permissions)
+		permissions = get_permissions(path);
+	if (flags.log_dim)
 	{
 		file = fopen(path, "r");
 		if (!file)
@@ -97,6 +118,6 @@ t_filedata	*filedata_get_from_file(struct dirent *d, char *path,
 		size = get_size(file);
 		fclose(file);
 	}
-	filedata = filedata_init(d->d_name, d->d_type, size);
+	filedata = filedata_init(d->d_name, d->d_type, size, permissions);
 	return (filedata);
 }

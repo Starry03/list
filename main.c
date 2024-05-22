@@ -2,8 +2,9 @@
 #include "theme.h"
 #include <stdio.h>
 
-#define VERSION "Version 2"
-#define PRINT_VERSION printf("%s\n", VERSION)
+#define VERSION "Version 2.1"
+#define CHANGE_LOG "Added permissions"
+#define PRINT_VERSION printf("%s\n%s\n", VERSION, CHANGE_LOG)
 
 int	main(int argc, char **argv)
 {

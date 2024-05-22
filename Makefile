@@ -3,16 +3,18 @@ FLAGS = -Wall -Werror -Wextra
 OPT = -O3
 NAME = list
 PROGRAM_FLAGS =
+SRC = $(wildcard *.c)
 
 UNIC = ./UniC/UniC.a -I./UniC
 
 all:
-	cd UniC && make re
-	$(CC) $(FLAGS) $(OPT) *.c -o $(NAME) $(UNIC)
+	$(CC) $(FLAGS) $(OPT) $(SRC) -o $(NAME) $(UNIC)
 
-install:
+uniC:
 	cd UniC && make re
-	$(CC) $(FLAGS) $(OPT) *.c -o $(NAME) $(UNIC) -D ICON_PATH='"//usr//local//share//list//icons.txt"'
+
+install: uniC
+	$(CC) $(FLAGS) $(OPT) $(SRC) -o $(NAME) $(UNIC) -D ICON_PATH='"//usr//local//share//list//icons.txt"'
 
 valgrind: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) $(PROGRAM_FLAGS)
@@ -23,4 +25,4 @@ clean:
 
 re: fclean all
 
-.PHONY: clean re install valgrind all
+.PHONY: clean re install valgrind all uniC

@@ -54,7 +54,7 @@ void	print_folder(char *folder_name, size_t folder_level, t_flags flags,
 			free(dirent_dir);
 			continue ;
 		}
-		filedata = filedata_get_from_file(dirent_dir, buf, flags.log_dim);
+		filedata = filedata_get_from_file(dirent_dir, buf, flags);
 		free(buf);
 		if (!is_printable(filedata, flags))
 		{

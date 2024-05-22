@@ -12,6 +12,7 @@ enum		e_flag
 	RECURSIVE,
 	SHOW_HIDDEN,
 	VERSION,
+	PERMISSIONS,
 };
 
 char		*get_flag(enum e_flag flag);
@@ -22,6 +23,7 @@ typedef struct s_flags
 	bool	recursive;
 	bool	show_hidden;
 	bool	show_version;
+	bool	show_permissions;
 	int		col_width;
 	char	*root_path;
 	char	**ignore_patterns;

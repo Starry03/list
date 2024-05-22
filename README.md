@@ -7,13 +7,9 @@ A better version of 'ls'
 
 - icons
 
+![alt text](image.png)
+
 Version 2
-
-### Screenshots
-
-![alt text](screenshots/image.png)
-
-![alt text](screenshots/image%20copy.png)
 
 ### Requirements
 
@@ -38,15 +34,16 @@ sh ./install.sh
 
 ### Usage
 ``` bash
-list <path> <flags separated by space>
+list <'path'> <'-flags'>
 ```
 
 #### Flags
 
-- ```-R``` recursive 
-- ```-d``` displays file size
-- ```-a``` hidden files
-- ```-V``` version
+- ```R``` recursive 
+- ```d``` file size
+- ```a``` hidden files
+- ```V``` version
+- ```l``` permissions
 
 ### ls vs list
 

@@ -9,29 +9,34 @@
 #define IGNORE_CURRENT_DIR "^\\.$"
 #define IGNORE_PREV_DIR "^\\.\\.$"
 
+#define HAS_FLAG(FLAG) strstr(argv[1], get_flag(FLAG));
+
 char	*get_flag(enum e_flag flag)
 {
 	switch (flag)
 	{
 	case LOG_DIM:
-		return ("-d");
+		return ("d");
 	case RECURSIVE:
-		return ("-R");
+		return ("R");
 	case SHOW_HIDDEN:
-		return ("-a");
+		return ("a");
 	case VERSION:
-		return ("-V");
+		return ("V");
+	case PERMISSIONS:
+		return ("l");
 	}
 	return (NULL);
 }
 
 void	init_default_flags(t_flags *flags)
 {
+	flags->col_width = 20;
 	flags->log_dim = false;
 	flags->recursive = false;
 	flags->show_hidden = false;
-	flags->col_width = 20;
 	flags->show_version = false;
+	flags->show_permissions = false;
 	flags->root_path = ".";
 	flags->ignore_patterns = (char **)calloc(N_PATTERNS + 1, sizeof(char *));
 	flags->ignore_patterns[0] = strdup(IGNORE_HIDDEN_FILES);
@@ -44,7 +49,6 @@ static void	set_ignore_patterns(t_flags *flags)
 		free(flags->ignore_patterns[0]);
 		flags->ignore_patterns[0] = NULL;
 	}
-	
 	if (flags->recursive && !flags->ignore_patterns[0])
 	{
 		flags->ignore_patterns[0] = strdup(IGNORE_CURRENT_DIR);
@@ -54,25 +58,15 @@ static void	set_ignore_patterns(t_flags *flags)
 
 void	parse_flags(t_flags *flags, size_t argc, char **argv)
 {
-	size_t	i;
-
 	if (argc < 2)
 		return ;
 	if (argv[1][0] != '-')
 		flags->root_path = argv[1];
-	i = 1;
-	while (i < argc)
-	{
-		if (strcmp(argv[i], get_flag(LOG_DIM)) == 0)
-			flags->log_dim = true;
-		else if (strcmp(argv[i], get_flag(RECURSIVE)) == 0)
-			flags->recursive = true;
-		else if (strcmp(argv[i], get_flag(SHOW_HIDDEN)) == 0)
-			flags->show_hidden = true;
-		else if (strcmp(argv[i], get_flag(VERSION)) == 0)
-			flags->show_version = true;
-		i++;
-	}
+	flags->log_dim = HAS_FLAG(LOG_DIM);
+	flags->recursive = HAS_FLAG(RECURSIVE);
+	flags->show_hidden = HAS_FLAG(SHOW_HIDDEN);
+	flags->show_version = HAS_FLAG(VERSION);
+	flags->show_permissions = HAS_FLAG(PERMISSIONS);
 	set_ignore_patterns(flags);
 }
 
