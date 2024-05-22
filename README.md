@@ -47,5 +47,5 @@ list <'path'> <'-flags'>
 
 ### ls vs list
 
-- list takes about 2x ram
-- speed is really close to ls, difference could be measured in ms or less
+- list about 2x ls ram
+- speed: really close to ls
