@@ -21,9 +21,9 @@ md  blue
 html  orange
 css  blue
 git  red
-sqlite  blue
-db  blue
-sql  blue
+sqlite  yellow
+db  yellow
+sql  yellow
 tex  blue
 # generic
 xml  blue
