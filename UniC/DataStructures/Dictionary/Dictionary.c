@@ -95,7 +95,7 @@ t_dict	Dict_Init(size_t size)
 
 /**
  * @brief Reallocates dict creating a new one with double the size
- *
+ * @warning causes double free, will be fixed in the future
  * @param old_dict
  * @return Dict
  */
@@ -165,6 +165,8 @@ bool	Dict_Add(t_dict *dict, Generic key, Generic value,
  *
  * @param dict
  * @param key
+ * @param hash_key
+ * @param cmp
  * @return void*
  */
 void	*Dict_Get(t_dict dict, Generic key, size_t (*hash_key)(Generic, size_t),

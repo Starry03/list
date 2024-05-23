@@ -1,38 +1,19 @@
-#include "Edge.h"
-#include "Utils/types.h"
+#include "Graph.h"
 #include <stdlib.h>
 
-Edge	Edge_Init(GraphNode from, GraphNode to, size_t weight)
+Edge	Edge_Init(Vertex src, Vertex dest, uint32_t weight)
 {
 	Edge	edge;
 
 	edge = (Edge)malloc(sizeof(t_edge));
 	if (!edge)
 		return (NULL);
-	edge->from = from;
-	edge->to = to;
+	edge->src = src;
+	edge->dest = dest;
 	edge->weight = weight;
 	return (edge);
 }
 void	Edge_Free(Generic edge)
 {
-	Edge	e;
-
-	if (!edge)
-		return ;
-	e = (Edge)edge;
-	free(e);
-}
-
-int	Edge_Cmp(Generic a, Generic b)
-{
-	if (!a || !b)
-		return (false);
-
-	Edge edge_a = (Edge)a;
-	Edge edge_b = (Edge)b;
-
-	return (GraphNode_Cmp(edge_a->from, edge_b->from)
-		&& GraphNode_Cmp(edge_a->to, edge_b->to)
-		&& edge_a->weight == edge_b->weight);
+	free(edge);
 }
