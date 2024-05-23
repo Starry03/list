@@ -21,6 +21,7 @@ md  blue
 html  orange
 css  blue
 git  red
+gitignore  red
 sqlite  yellow
 db  yellow
 sql  yellow
