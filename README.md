@@ -19,13 +19,20 @@ Version 2
 
 - themes (only default is available now)
 
-### Install
 
-#### Linux
+### Linux
+
+#### Install
 
 ```sh
 cd <this folder>
-sh ./install.sh
+sh ./linux_install.sh
+```
+
+#### Update
+
+```sh
+sh ./linux_update.sh
 ```
 
 ### Usage
