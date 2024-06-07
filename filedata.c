@@ -48,7 +48,7 @@ char	*file_get_extension(char *name)
 
 static char	*filename_truncated(char *name, t_flags flags)
 {
-	if (strlen(name) <= (size_t)flags.col_width)
+	if (strlen(name) < (size_t)flags.col_width - 2)
 		return (name);
 	memset(name + flags.col_width - 6, '.', 3);
 	name[flags.col_width - 3] = '\0';

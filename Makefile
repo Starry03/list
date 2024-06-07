@@ -23,6 +23,6 @@ clean:
 	cd UniC && make clean
 	rm -f $(NAME)
 
-re: fclean all
+re: clean all
 
 .PHONY: clean re install valgrind all uniC
