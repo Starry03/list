@@ -10,5 +10,6 @@ CMakeLists.txt
 *.iml
 run.sh
 main.c
+main
 *.a
 *.o

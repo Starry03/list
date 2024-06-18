@@ -16,4 +16,14 @@ typedef Node_ *Node;
 
 Node Node_Init(Generic info);
 
+typedef struct DoubleNode_ {
+	Generic info;
+	struct DoubleNode_ *next;
+	struct DoubleNode_ *prev;
+} DoubleNode_;
+
+typedef DoubleNode_ *DoubleNode;
+
+DoubleNode DoubleNode_Init(Generic info);
+
 #endif //NODES_H

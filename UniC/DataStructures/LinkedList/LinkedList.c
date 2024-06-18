@@ -31,28 +31,37 @@ void	LinkedList_Push(LinkedList *list, Generic object)
 	*list = node;
 }
 
-void	LinkedList_Append(LinkedList list, Generic value)
+LinkedList	LinkedList_Append(LinkedList *list, Generic value)
 {
 	LinkedList	node;
+	LinkedList	last;
 
 	if (!list)
-		return ;
+		return (LINKEDLIST_EMPTY);
 	node = LinkedList_Init(value);
-	while (list->next)
-		list = list->next;
-	list->next = node;
+	if (!node)
+		return (LINKEDLIST_EMPTY);
+	if (!*list)
+	{
+		*list = node;
+		return (node);
+	}
+	last = LinkedList_GetLast(*list);
+	last->next = node;
+	return (node);
 }
 
-	void LinkedList_Remove(LinkedList *node, void (*dealloc)(Generic))
+void	LinkedList_Remove(LinkedList *node, void (*dealloc)(Generic))
 {
-	LinkedList	next;
+	LinkedList	temp;
 
-	if (!node || !*node || !dealloc)
+	if (!node || !*node)
 		return ;
-	next = LinkedList_GetNext(*node);
-	dealloc(LinkedList_GetInfo(*node));
-	free(*node);
-	*node = next;
+	temp = *node;
+	(*node) = (*node)->next;
+	if (dealloc)
+		dealloc(temp->info);
+	free(temp);
 }
 
 void	LinkedList_RemoveByValue(LinkedList *list, Generic value,
@@ -102,4 +111,64 @@ void	LinkedList_Dealloc(LinkedList head, void (*dealloc)(Generic))
 		free(head);
 		head = next;
 	}
+}
+
+LinkedList	LinkedList_GetNth(LinkedList list, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		list = LinkedList_GetNext(list);
+		if (!list)
+			return (LINKEDLIST_EMPTY);
+		i++;
+	}
+	return (list);
+}
+
+size_t	LinkedList_Size(LinkedList list)
+{
+	size_t	size;
+
+	size = 0;
+	while (list)
+	{
+		size++;
+		list = LinkedList_GetNext(list);
+	}
+	return (size);
+}
+
+LinkedList	LinkedList_Insert(LinkedList *list, Generic value, size_t index)
+{
+	LinkedList	c_node;
+	LinkedList	n_node;
+
+	if (!list || !*list)
+		return (LINKEDLIST_EMPTY);
+	if (index == START)
+	{
+		LinkedList_Push(list, value);
+		return (*list);
+	}
+	if (index == LAST)
+		return (LinkedList_Append(list, value));
+	c_node = LinkedList_GetNth(*list, index);
+	if (!c_node)
+		return (LINKEDLIST_EMPTY);
+	n_node = LinkedList_Init(value);
+	n_node->next = c_node->next;
+	c_node->next = n_node;
+	return (n_node);
+}
+
+LinkedList	LinkedList_GetLast(LinkedList list)
+{
+	if (!list)
+		return (LINKEDLIST_EMPTY);
+	while (list->next)
+		list = list->next;
+	return (list);
 }

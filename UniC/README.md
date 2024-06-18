@@ -1,11 +1,11 @@
 # UniC
 
-### Version 1.5
+### Version 1.6
 
 ### Latest features & changes
 
-- Dictionary (Hashmap)
-- Hashing function
+- DoubleLinkedList
+- types
 
 ### TO-DO
 
@@ -35,9 +35,11 @@ gcc ... ./UniC/UniC.a		# link library
 - Vector
 - Node
 - Linked list
+- Double linked list
 - Queue
+- Stack
 - Binary tree
-- Dictionary
+- Dictionary (Hash map)
 
 ### Dictionaries
 
@@ -70,7 +72,6 @@ int main() {
 ```
 
 - Resizes for better performance
-- Handles 8 bytes data, use malloc'd pointers to handle bigger datas
 
 ## Algorithms
 

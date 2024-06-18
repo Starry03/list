@@ -2,8 +2,8 @@
 // Created by andre on 4/13/2023.
 //
 
-#ifndef STARRY_MATRIX_H
-# define STARRY_MATRIX_H
+#ifndef MATRIX_H
+# define MATRIX_H
 
 # include <stdbool.h>
 # include <stddef.h>
@@ -62,4 +62,4 @@ void			Matrix_Print(Matrix matrix);
 
 void			Matrix_Free(Matrix matrix);
 
-#endif // STARRY_MATRIX_H
+#endif

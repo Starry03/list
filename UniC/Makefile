@@ -12,7 +12,7 @@ LIB := UniC.a
 
 # Compiler and flags
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror -I.
+CFLAGS := -Wall -Wextra -Werror -I. -g
 LINK := -lm
 
 # Default target
@@ -24,15 +24,18 @@ $(LIB): $(OBJS)
 
 # Rule to compile .c files into .o files
 %.o: %.c
-	$(CC) $(CFLAGS) $(LINK) -c $< -o $@
+	@$(CC) $(CFLAGS) $(LINK) -c $< -o $@
 
 # Rule to clean up
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(LIB)
+	@rm -f $(LIB)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test:
+	$(CC) $(CFLAGS) main.c -I. ./UniC.a -o main && valgrind --leak-check=full -s ./main
+
+.PHONY: all clean fclean re test

@@ -22,7 +22,6 @@ void	Graph_Free(Graph graph)
 
 	if (!graph)
 		return ;
-	assert(graph->adjacency_list != NULL);
 	adj_list = graph->adjacency_list;
 	while (adj_list)
 	{

@@ -25,3 +25,14 @@ Node Node_Init(Generic info)
 	node->next = EmptyNode();
 	return node;
 }
+
+DoubleNode DoubleNode_Init(Generic info)
+{
+	DoubleNode node = (DoubleNode)malloc(sizeof(DoubleNode_));
+	if (!node)
+		return (DoubleNode)NULL;
+	node->info = info;
+	node->next = (DoubleNode)NULL;
+	node->prev = (DoubleNode)NULL;
+	return node;
+}

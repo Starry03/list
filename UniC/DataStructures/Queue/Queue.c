@@ -15,7 +15,7 @@ inline Queue	Queue_Init(Generic info)
 
 inline void	Queue_Add(Queue queue, Generic info)
 {
-	LinkedList_Append(queue, info);
+	LinkedList_Append(&queue, info);
 }
 
 Generic	Queue_poll(Queue *queue, void (*dealloc)(Generic))
