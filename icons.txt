@@ -5,7 +5,7 @@ js  yellow
 java  red
 class  red
 jar  red
-kotlin  purple
+kt  purple
 swift  orange
 py  yellow
 h  purple
