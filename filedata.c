@@ -82,8 +82,7 @@ static void	print_file(t_filedata *filedata, t_flags options, t_dict icons)
 	icon = NULL;
 	file_extension = file_get_extension(filedata->name);
 	if (file_extension)
-		icon = (char *)Dict_Get(icons, file_extension, hash_string,
-				string_compare);
+		icon = (char *)Dict_Get(icons, file_extension);
 	if (!icon)
 		printf("%-*s", col_width, filename_truncated(filename, options));
 	else
