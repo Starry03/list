@@ -14,7 +14,7 @@
 #define BUFSIZE 64
 #define ICONS_DICT_SIZE 128
 
-#define ADD_COLOR(dict, name, color_code) (Dict_Add(&dict, ft_strdup(name), ft_strdup(color_code), &free))
+#define ADD_COLOR(dict, name, color_code) (Dict_Add(dict, ft_strdup(name), ft_strdup(color_code), &free))
 
 /**
  * @brief Initialize the colors dictionary
@@ -82,7 +82,7 @@ static Theme	theme_parser(const char *config_path)
 		color_buf = Dict_Get(colors, color_buf);
 		color_buf = ft_strjoin(color_buf, icon_buf);
 		color_buf = ft_strfjoin(color_buf, STD_COLOR);
-		if (Dict_Add(&theme->icons, key_buf, color_buf, &free))
+		if (Dict_Add(theme->icons, key_buf, color_buf, &free))
 			continue ;
 		free(key_buf);
 		free(color_buf);
