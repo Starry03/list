@@ -36,6 +36,7 @@ static t_dict	colors_dict(void)
 	ADD_COLOR(colors, "white", WHITE);
 	ADD_COLOR(colors, "gray", GRAY);
 	ADD_COLOR(colors, "purple", PURPLE);
+	ADD_COLOR(colors, "orange", ORANGE);
 	return (colors);
 }
 
