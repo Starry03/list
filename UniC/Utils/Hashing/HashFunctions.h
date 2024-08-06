@@ -21,6 +21,8 @@ size_t hash_char(Generic key, size_t size);
 
 size_t hash_string(Generic key, size_t size);
 
-size_t hash_generic(size_t addr, size_t size);
+size_t hash_generic(size_t bytes, size_t size);
+
+size_t hash_universal(size_t key, uint64_t a, uint64_t b, uint64_t p, size_t size);
 
 #endif //STARRY_CLIBRARY_HASHFUNCTIONS_H

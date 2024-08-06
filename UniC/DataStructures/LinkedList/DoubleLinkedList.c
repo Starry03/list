@@ -5,6 +5,7 @@ DoubleLinkedList	DoubleLinkedList_Init(Generic info)
 {
 	return (DoubleNode_Init(info));
 }
+
 DoubleLinkedList	DoubleLinkedList_Insert(DoubleLinkedList *list,
 		Generic info, size_t index)
 {
@@ -29,6 +30,7 @@ DoubleLinkedList	DoubleLinkedList_Insert(DoubleLinkedList *list,
 		prev->next = node;
 	return (node);
 }
+
 DoubleLinkedList	DoubleLinkedList_Append(DoubleLinkedList list, Generic info)
 {
 	DoubleLinkedList	last;
@@ -38,6 +40,7 @@ DoubleLinkedList	DoubleLinkedList_Append(DoubleLinkedList list, Generic info)
 	last->next->prev = last;
 	return (last->next);
 }
+
 DoubleLinkedList	DoubleLinkedList_Push(DoubleLinkedList *list, Generic info)
 {
 	DoubleLinkedList	node;
@@ -47,6 +50,7 @@ DoubleLinkedList	DoubleLinkedList_Push(DoubleLinkedList *list, Generic info)
 	*list = node;
 	return (node);
 }
+
 void	DoubleLinkedList_Remove(DoubleLinkedList node, Deallocator dealloc)
 {
 	DoubleLinkedList	next;
@@ -64,6 +68,7 @@ void	DoubleLinkedList_Remove(DoubleLinkedList node, Deallocator dealloc)
 		dealloc(node->info);
 	free(node);
 }
+
 void	DoubleLinkedList_RemoveByValue(DoubleLinkedList list, Comparator cmp,
 		Generic info, Deallocator dealloc)
 {
@@ -72,11 +77,13 @@ void	DoubleLinkedList_RemoveByValue(DoubleLinkedList list, Comparator cmp,
 	node = DoubleLinkedList_Search(list, cmp, info);
 	DoubleLinkedList_Remove(node, dealloc);
 }
+
 void	DoubleLinkedList_RemoveByIndex(DoubleLinkedList list, size_t index,
 		Deallocator dealloc)
 {
 	DoubleLinkedList_Remove(DoubleLinkedList_GetNth(list, index), dealloc);
 }
+
 DoubleLinkedList	DoubleLinkedList_Search(DoubleLinkedList list,
 		Comparator cmp, Generic info)
 {
@@ -84,6 +91,7 @@ DoubleLinkedList	DoubleLinkedList_Search(DoubleLinkedList list,
 		list = DoubleLinkedList_GetNext(list);
 	return (list);
 }
+
 DoubleLinkedList	DoubleLinkedList_GetNth(DoubleLinkedList list, size_t index)
 {
 	size_t	i;
@@ -96,6 +104,7 @@ DoubleLinkedList	DoubleLinkedList_GetNth(DoubleLinkedList list, size_t index)
 	}
 	return (list);
 }
+
 DoubleLinkedList	DoubleLinkedList_GetFirst(DoubleLinkedList list)
 {
 	if (!list)
@@ -110,12 +119,14 @@ DoubleLinkedList	DoubleLinkedList_GetLast(DoubleLinkedList list)
 		list = list->next;
 	return (list);
 }
+
 DoubleLinkedList	DoubleLinkedList_GetNext(DoubleLinkedList list)
 {
 	if (!list)
 		return (DOUBLELINKEDLIST_EMPTY);
 	return (list->next);
 }
+
 DoubleLinkedList	DoubleLinkedList_GetPrev(DoubleLinkedList list)
 {
 	if (!list)
@@ -129,6 +140,7 @@ DoubleLinkedList	DoubleLinkedList_GetInfo(DoubleLinkedList list)
 		return (DOUBLELINKEDLIST_EMPTY);
 	return (list->next);
 }
+
 size_t	DoubleLinkedList_GetLength(DoubleLinkedList list)
 {
 	size_t	length;
@@ -141,6 +153,7 @@ size_t	DoubleLinkedList_GetLength(DoubleLinkedList list)
 	}
 	return (length);
 }
+
 void	DoubleLinkedList_Dealloc(DoubleLinkedList list, Deallocator dealloc)
 {
 	DoubleLinkedList	next;

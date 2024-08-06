@@ -3,13 +3,18 @@ cmake-build-debug
 .idea
 .vscode
 build/
+.venv
 
 # files
 CMakeLists.txt
 *.xml
 *.iml
-run.sh
-main.c
-main
+run.shmain.c
 *.a
 *.o
+*vgcore*
+main.c
+main
+
+examples/*
+!examples/*.[ch]

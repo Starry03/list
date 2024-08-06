@@ -39,33 +39,29 @@ LinkedList	LinkedList_Append(LinkedList *list, Generic value)
 	if (!list)
 		return (LINKEDLIST_EMPTY);
 	node = LinkedList_Init(value);
-	if (!node)
-		return (LINKEDLIST_EMPTY);
-	if (!*list)
-	{
-		*list = node;
-		return (node);
-	}
 	last = LinkedList_GetLast(*list);
-	last->next = node;
+	if (!last)
+		*list = node;
+	else
+		last->next = node;
 	return (node);
 }
 
-void	LinkedList_Remove(LinkedList *node, void (*dealloc)(Generic))
+void	LinkedList_Remove(LinkedList *node, Deallocator dealloc)
 {
-	LinkedList	temp;
+	LinkedList	tmp;
 
 	if (!node || !*node)
 		return ;
-	temp = *node;
-	(*node) = (*node)->next;
+	tmp = *node;
+	*node = (*node)->next;
 	if (dealloc)
-		dealloc(temp->info);
-	free(temp);
+		dealloc(tmp->info);
+	free(tmp);
 }
 
 void	LinkedList_RemoveByValue(LinkedList *list, Generic value,
-		void (*dealloc)(Generic), int (*cmp)(Generic, Generic))
+		Deallocator dealloc, int (*cmp)(Generic, Generic))
 {
 	if (!list || !*list || !value)
 		return ;
@@ -97,13 +93,13 @@ Generic	LinkedList_GetInfo(LinkedList list)
 	return (list->info);
 }
 
-void	LinkedList_Dealloc(LinkedList head, void (*dealloc)(Generic))
+void	LinkedList_Dealloc(LinkedList head, Deallocator dealloc)
 {
 	LinkedList	next;
 
 	if (!head)
 		return ;
-	while (head != NULL)
+	while (head)
 	{
 		next = head->next;
 		if (dealloc)
@@ -126,6 +122,18 @@ LinkedList	LinkedList_GetNth(LinkedList list, size_t n)
 		i++;
 	}
 	return (list);
+}
+
+void	LinkedList_RemoveNth(LinkedList *list, size_t n, Deallocator dealloc)
+{
+	if (!list || !*list)
+		return ;
+	while (n)
+	{
+		list = &((*list)->next);
+		n--;
+	}
+	LinkedList_Remove(list, dealloc);
 }
 
 size_t	LinkedList_Size(LinkedList list)
@@ -155,7 +163,7 @@ LinkedList	LinkedList_Insert(LinkedList *list, Generic value, size_t index)
 	}
 	if (index == LAST)
 		return (LinkedList_Append(list, value));
-	c_node = LinkedList_GetNth(*list, index);
+	c_node = LinkedList_GetNth(*list, index - 1);
 	if (!c_node)
 		return (LINKEDLIST_EMPTY);
 	n_node = LinkedList_Init(value);

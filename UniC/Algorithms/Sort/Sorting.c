@@ -9,6 +9,9 @@
 #include <math.h>
 #include <string.h>
 
+/**
+ * @brief swaps two generics
+ */
 static void	swap(Generic *a, Generic *b)
 {
 	Generic	temp;
@@ -18,8 +21,13 @@ static void	swap(Generic *a, Generic *b)
 	*b = temp;
 }
 
-// O(n^2)
-void	BubbleSort(Generic *array, size_t size, int (*cmp)(Generic, Generic))
+/**
+ * @brief bubble sort
+ * @param array
+ * @param size
+ * @param cmp
+ */
+void	BubbleSort(Generic *array, size_t size, Comparator cmp)
 {
 	bool	swapped;
 
@@ -38,8 +46,13 @@ void	BubbleSort(Generic *array, size_t size, int (*cmp)(Generic, Generic))
 	}
 }
 
-// O(n^2)
-void	InsertionSort(Generic *array, size_t size, int (*cmp)(Generic, Generic))
+/**
+ * @brief insertion sort
+ * @param array
+ * @param size
+ * @param cmp
+ */
+void	InsertionSort(Generic *array, size_t size, Comparator cmp)
 {
 	size_t	currentIndex;
 
@@ -55,9 +68,15 @@ void	InsertionSort(Generic *array, size_t size, int (*cmp)(Generic, Generic))
 	}
 }
 
-// O(n log n)
-void	Merge(Generic *arr, size_t low, size_t mid, size_t high,
-		int (*cmp)(Generic, Generic))
+/**
+ * @brief Merge
+ * @param arr
+ * @param low: start of the sub-array
+ * @param mid: middle of the sub-array
+ * @param high: end of the sub-array
+ * @param cmp
+ */
+void	Merge(Generic *arr, size_t low, size_t mid, size_t high, Comparator cmp)
 {
 	const size_t	tempLength = high - low + 1;
 	Generic			*temp[tempLength];
@@ -91,9 +110,10 @@ void	Merge(Generic *arr, size_t low, size_t mid, size_t high,
 		arr[low + i] = temp[i];
 }
 
-// O(n log n)
-void	MergeSort_rec(Generic *arr, size_t low, size_t high, int (*cmp)(Generic,
-			Generic))
+/**
+ * @brief merge sort recursive aux funcion 
+ */
+void	MergeSort_rec(Generic *arr, size_t low, size_t high, Comparator cmp)
 {
 	size_t	mid;
 
@@ -106,13 +126,20 @@ void	MergeSort_rec(Generic *arr, size_t low, size_t high, int (*cmp)(Generic,
 	Merge(arr, low, mid, high, cmp);
 }
 
-// O(n log n)
-void	MergeSort(Generic *array, size_t size, int (*cmp)(Generic, Generic))
+/**
+ * @brief merge sort
+ * @param array
+ * @param size
+ * @param cmp
+ */
+void	MergeSort(Generic *array, size_t size, Comparator cmp)
 {
 	MergeSort_rec(array, 0, size - 1, cmp);
 }
 
-// O(n log n)
+/**
+ * @brief quick sort recursive aux function
+ */
 void	QuickSort_rec(int *arr, size_t low, size_t high)
 {
 	size_t	left;
@@ -148,15 +175,22 @@ void	QuickSort_rec(int *arr, size_t low, size_t high)
 	}
 }
 
-// O(n log n)
+/**
+ * @brief quick sort
+ */
 void	QuickSort(int *array, size_t size)
 {
 	QuickSort_rec(array, 0, size - 1);
 }
 
-/*
- * O(n + k)
- */
+/**
+ * @brief counting sort
+ * @param array
+ * @param dest
+ * @param size
+ * @param k: max value in the array
+ * @note array[i] >= 0
+*/
 void	CountingSort(const int array[], int dest[], int size, int k)
 {
 	int	c[k + 1];
@@ -179,12 +213,11 @@ void	CountingSort(const int array[], int dest[], int size, int k)
 }
 
 /**
- * O(n)
- *
- * @brief range[0, 1) => 10 buckets of linked lists
+ * @brief bucket sort
+ * @note range[0, 1) => 10 buckets of linked lists
  * @param array
  * @param size
- * @warning not runnable
+ * @warning to do
  */
 void	BucketSort(Generic *array, int size)
 {

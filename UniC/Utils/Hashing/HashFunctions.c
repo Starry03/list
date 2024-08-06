@@ -11,6 +11,11 @@ static size_t	normalize(size_t bytes, size_t size)
 	return (bytes % size);
 }
 
+size_t	hash_int(Generic key, size_t size)
+{
+	return (hash_generic((size_t)key, size));
+}
+
 size_t	hash_string(Generic key, size_t size)
 {
 	size_t	hash;
@@ -18,13 +23,11 @@ size_t	hash_string(Generic key, size_t size)
 
 	hash = 0;
 	str = (char *)key;
-
 	while (*str)
 	{
 		hash = hash * 31 + *str;
 		str++;
 	}
-
 	return (normalize(hash, size));
 }
 
@@ -44,4 +47,13 @@ size_t	hash_generic(size_t bytes, size_t size)
 	bin = (bin + (bin << 5)) ^ MAGIC;
 	bin = bin ^ (bin >> 11);
 	return (normalize((size_t)bin, size));
+}
+
+size_t	hash_universal(size_t key, uint64_t a, uint64_t b, uint64_t p,
+		size_t size)
+{
+	size_t	hash;
+
+	hash = ((a * key + b) % p);
+	return (normalize(hash, size));
 }

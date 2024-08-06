@@ -1,16 +1,14 @@
 # UniC
 
-### Version 1.6
+### Version 1.9.2
 
 ### Latest features & changes
 
-- DoubleLinkedList
-- types
+- doc generation
 
 ### TO-DO
 
-- Heap
-- Graph
+- doc ui
 
 ## About
 
@@ -21,12 +19,36 @@ Feel free to use it, but please note:
 - it's not optimized for performance
 - it could be obviously improved
 
+### Dependecies
+
+- gcc
+- make
+- python (doc)
+
+### Doc
+
+```sh
+bash ./doc_gen.sh
+or
+chmod 777 ./doc_gen.sh && ./doc_gen.sh
+```
+will generate
+```sh
+doc/doc.json
+```
+doc ui
+```sh
+```
+
 ### Linking
 
 ```sh
-cd '<lib path>'
-make						# compile library
-gcc ... ./UniC/UniC.a		# link library
+# go inside UniC path
+cd <lib path>
+# compile library
+make
+# link library
+gcc ... <lib path>/UniC.a
 ```
 
 ## Data structures
@@ -40,38 +62,8 @@ gcc ... ./UniC/UniC.a		# link library
 - Stack
 - Binary tree
 - Dictionary (Hash map)
-
-### Dictionaries
-
-Handles everything
-
-example:
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include "./DataStructures/Dictionary/Dictionary.h"
-
-void alloc(Dict d)
-{
-	static int i = 0;
-	Dict_Add(d, i++, 10, NULL, NULL);
-}
-
-int main() {
-	Dict dict = Dict_Init(10);
-	int i = 0;
-	while (i++ < 10)
-		alloc(dict);
-	Dict_Status(dict);
-	int a = (int)Dict_Get(&dict, 0);
-	printf("%d\n", a);
-	Dict_Free(dict);
-}
-
-```
-
-- Resizes for better performance
+- Heap
+- Graph
 
 ## Algorithms
 
@@ -81,4 +73,30 @@ int main() {
 ## Libft
 
 Basic implementation
+
+## Examples
+
+Compile the library before running any example
+
+### Graph
+
+- Generate a graphical representation of the graph using mermaid ([repo](https://github.com/mermaid-js/mermaid))
+
+	```make
+	make graphdraw
+	```
+	output:
+	```mermaid
+	flowchart LR
+	0((a)) -- 2 --> 1((b))
+	0((a)) -- 1 --> 3((d))
+	1((b)) -- 4 --> 2((c))
+	1((b)) -- 1 --> 4((e))
+	2((c))
+	3((d)) -- 3 --> 4((e))
+	4((e)) -- 2 --> 5((f))
+	5((f)) -- 6 --> 4((e))
+	5((f)) -- 3 --> 2((c))
+	5((f)) -- 1 --> 0((a))
+	```
 

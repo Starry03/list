@@ -3,49 +3,51 @@
 //
 
 #ifndef BINARYTREE_H
-#define BINARYTREE_H
+# define BINARYTREE_H
 
-#include <stdbool.h>
-#include "../../Utils/types.h"
-#include <stddef.h>
+# include "../../Utils/types.h"
+# include <stdbool.h>
+# include <stddef.h>
 
 typedef struct BinaryTreeNode
 {
-	Generic info;
-	struct BinaryTreeNode *left;
-	struct BinaryTreeNode *right;
-} BinaryTreeNode;
+	Generic					key;
+	Generic					info;
+	struct BinaryTreeNode	*left;
+	struct BinaryTreeNode	*right;
+}							BinaryTreeNode;
 
-typedef BinaryTreeNode *BinaryTree;
+typedef BinaryTreeNode		*BinaryTree;
+# define BINARY_TREE_EMPTY (BinaryTree) NULL
 
-#define TREE_NODE_SIZE 24
+BinaryTree					InitTreeNode(void);
 
-BinaryTree EmptyTree();
+BinaryTree					BinaryTree_Init(Generic info, BinaryTree left,
+								BinaryTree right);
 
-BinaryTree InitTreeNode();
+BinaryTree					BinaryTree_Left(BinaryTree tree);
 
-BinaryTree NewTree(Generic info, BinaryTree left, BinaryTree right);
+BinaryTree					BinaryTree_Right(BinaryTree tree);
 
-BinaryTree BinaryTree_Left(BinaryTree tree);
+Generic						BinaryTree_Value(BinaryTree tree);
 
-BinaryTree BinaryTree_Right(BinaryTree tree);
+size_t						BinaryTree_Depth(BinaryTree tree);
 
-Generic BinaryTree_Value(BinaryTree tree);
+size_t						BinaryTree_MaxNodesNumber(size_t depth);
 
-size_t BinaryTree_Depth(BinaryTree tree);
+void						BinaryTree_SetLeft(BinaryTree tree,
+								BinaryTree left);
 
-size_t BinaryTree_MaxNodesNumber(size_t depth);
+void						BinaryTree_SetDeepLeft(BinaryTree *tree,
+								BinaryTree left);
 
-bool BinaryTree_IsInBinarySearchTree(BinaryTree tree, Generic value);
+bool						IsLeaf(BinaryTree tree);
 
-void BinaryTree_SetLeft(BinaryTree tree, BinaryTree left);
+bool						HasTwoNodes(BinaryTree tree);
 
-void BinaryTree_SetDeepLeft(BinaryTree *tree, BinaryTree left);
+bool						BinaryTree_DeleteTreeNode(BinaryTree *tree,
+								Generic value);
 
-bool IsLeaf(BinaryTree tree);
-
-bool HasTwoNodes(BinaryTree tree);
-
-bool BinaryTree_DeleteTreeNode(BinaryTree *tree, Generic value);
+void						BinaryTree_Free(BinaryTree tree);
 
 #endif // BINARYTREE_H

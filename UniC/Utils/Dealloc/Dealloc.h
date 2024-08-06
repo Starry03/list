@@ -4,6 +4,7 @@
 #include "../types.h"
 
 void dealloc_int(Generic addr);
+void dealloc_uint64(Generic addr);
 void dealloc_float(Generic addr);
 void dealloc_char(Generic addr);
 void dealloc_string(Generic addr);

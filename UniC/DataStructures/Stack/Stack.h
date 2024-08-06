@@ -9,9 +9,10 @@
 
 typedef LinkedList	Stack;
 
-Stack				stack_init(Generic value);
-void				stack_add(Stack stack, Generic value);
-Generic				stack_poll(Stack *stack, void (*dealloc)(Generic));
-void				stack_free(Stack *stack, void (*dealloc)(Generic));
+Stack				Stack_Init(Generic value);
+void				Stack_Add(Stack stack, Generic value);
+Generic				Stack_Poll(Stack *stack);
+void 				Stack_Dealloc_Element(Stack stack, Deallocator dealloc);
+void				Stack_Free(Stack *stack, void (*dealloc)(Generic));
 
 #endif

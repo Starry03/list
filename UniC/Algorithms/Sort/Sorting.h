@@ -9,15 +9,15 @@
 #include <stdbool.h>
 #include "Utils/types.h"
 
-void BubbleSort(Generic *array, size_t size, int (*cmp)(Generic, Generic));
+void BubbleSort(Generic *array, size_t size, Comparator cmp);
 
-void InsertionSort(Generic *array, size_t size, int (*cmp)(Generic, Generic));
+void InsertionSort(Generic *array, size_t size, Comparator cmp);
 
-void MergeSort(Generic *array, size_t size, int (*cmp)(Generic, Generic));
+void MergeSort(Generic *array, size_t size, Comparator cmp);
 
-void MergeSort_rec(Generic *arr, size_t low, size_t high, int (*cmp)(Generic, Generic));
+void MergeSort_rec(Generic *arr, size_t low, size_t high, Comparator cmp);
 
-void Merge(Generic *arr, size_t low, size_t mid, size_t high, int (*cmp)(Generic, Generic));
+void Merge(Generic *arr, size_t low, size_t mid, size_t high, Comparator cmp);
 
 void QuickSort_rec(int *arr, size_t low, size_t high);
 

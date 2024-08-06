@@ -6,14 +6,14 @@
 #include "Dictionary.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/random.h>
+#include <time.h>
 
-#define DEFAULT_SIZE 20
+#define DEFAULT_SIZE 16
 #define REALLOC_COEFF 2
-
-static inline t_dict	EmptyDict(void)
-{
-	return ((t_dict)NULL);
-}
+#define MAX_LOAD_FACTOR 0.75
+#define DICT_EMPTY ((t_dict)NULL)
+#define PRIME_DEFAULT ((uint64_t)806526737)
 
 static inline t_dict	Dict_alloc(void)
 {
@@ -21,8 +21,7 @@ static inline t_dict	Dict_alloc(void)
 }
 
 static Dict_obj	Dict_Obj_Init(Generic key, Generic value,
-		size_t (*hash_key)(Generic, size_t), void (*dealloc_key)(Generic),
-		void (*dealloc_value)(Generic), int (*cmp)(Generic, Generic))
+		Deallocator dealloc_key, Deallocator dealloc_value)
 {
 	Dict_obj	obj;
 
@@ -33,8 +32,6 @@ static Dict_obj	Dict_Obj_Init(Generic key, Generic value,
 	obj->value = value;
 	obj->dealloc_key = dealloc_key;
 	obj->dealloc_value = dealloc_value;
-	obj->hash_key = hash_key;
-	obj->cmp = cmp;
 	return (obj);
 }
 
@@ -67,61 +64,119 @@ static LinkedList	*Dict_Alloc_Buckets(size_t size)
 /**
  * @brief Creates Dictionary instance
  *
- * @param size if null, will be DEFAULT_SIZE
+ * @param size number of buckets, if null size := DEFAULT_SIZE
+ * @param cmp function to compare keys
+ * @param hash_key function to hash keys
+ * @param dealloc_key function to deallocate keys
  * @return Dict
  */
-t_dict	Dict_Init(size_t size)
+t_dict	Dict_Init(size_t size, Comparator cmp, Hasher hash_key,
+		Deallocator dealloc_key)
 {
 	LinkedList	*buckets;
 	t_dict		dict;
 
 	dict = Dict_alloc();
 	if (!dict)
-		return (EmptyDict());
-	if (!size)
-		dict->size = DEFAULT_SIZE;
-	else
-		dict->size = size;
+		return (DICT_EMPTY);
+	dict->size = (!size) ? DEFAULT_SIZE : size;
 	buckets = Dict_Alloc_Buckets(dict->size);
 	if (!buckets)
 	{
 		free(dict);
-		return (EmptyDict());
+		return (DICT_EMPTY);
 	}
 	dict->buckets = buckets;
+	dict->cmp = cmp;
+	dict->hash_key = hash_key;
 	dict->used = 0;
+	dict->dealloc_key = dealloc_key;
+	dict->prime = PRIME_DEFAULT;
+	srandom(time(NULL));
+	dict->a = 1 + random() / dict->prime;
+	dict->b = random() / dict->prime;
 	return (dict);
 }
 
-/**
- * @brief Reallocates dict creating a new one with double the size
- * @warning causes double free, will be fixed in the future
- * @param old_dict
- * @return Dict
- */
-t_dict	Dict_Realloc(t_dict old_dict)
+static size_t	hash_function(t_dict dict, size_t hashed_key)
 {
-	t_dict		new_dict;
-	size_t		i;
-	LinkedList	current_bucket;
-	Dict_obj	obj;
+	return (hash_universal(hashed_key, dict->a, dict->b, dict->prime,
+			dict->size));
+}
 
-	new_dict = Dict_Init(old_dict->size * REALLOC_COEFF);
+/**
+ * @brief Takes all dict_objs from dict
+ * @param dict
+ * @return LinkedList of Dict_obj
+ */
+static LinkedList	take_dict_objs(t_dict dict)
+{
+	LinkedList	list;
+	LinkedList	bucket;
+	size_t		i;
+	Dict_obj	obj;
+	LinkedList	next;
+
+	list = LINKEDLIST_EMPTY;
 	i = 0;
-	while (i < old_dict->size)
+	while (i < dict->size)
 	{
-		current_bucket = old_dict->buckets[i];
-		while (current_bucket)
+		bucket = (dict->buckets)[i];
+		while (bucket)
 		{
-			obj = current_bucket->info;
-			Dict_Add(&new_dict, obj->key, obj->value, obj->hash_key,
-				obj->dealloc_key, obj->dealloc_value, obj->cmp);
-			current_bucket = LinkedList_GetNext(current_bucket);
+			obj = (Dict_obj)(LinkedList_GetInfo(bucket));
+			next = LinkedList_GetNext(bucket);
+			free(bucket);
+			bucket = next;
+			LinkedList_Push(&list, obj);
 		}
 		i++;
 	}
-	Dict_Free(old_dict);
-	return (new_dict);
+	return (list);
+}
+
+/**
+ * @brief Adds object to dict without checking if key already exists
+ * @note Used internally to avoid reallocating dict from zero
+ */
+static void	soft_add(t_dict dict, Dict_obj obj)
+{
+	size_t		hash;
+	LinkedList	bucket;
+
+	hash = hash_function(dict, dict->hash_key(obj->key, dict->size));
+	bucket = dict->buckets[hash];
+	LinkedList_Push(&bucket, obj);
+	dict->buckets[hash] = bucket;
+	dict->used++;
+}
+
+/**
+ * @brief Reallocates dict with double the size
+ * @param dict
+ */
+static void	Dict_Realloc(t_dict dict)
+{
+	LinkedList	list;
+	LinkedList  temp;
+
+	list = take_dict_objs(dict);
+	temp = list;
+	free(dict->buckets);
+	dict->buckets = Dict_Alloc_Buckets(dict->size * REALLOC_COEFF);
+	dict->size = dict->size * REALLOC_COEFF;
+	dict->used = 0;
+	while (list)
+	{
+		soft_add(dict, (Dict_obj)LinkedList_GetInfo(list));
+		list = LinkedList_GetNext(list);
+	}
+	LinkedList_Dealloc(temp, NULL);
+}
+
+static bool	dict_has_breached_load_factor(t_dict dict)
+{
+	return (((double)(dict->used + 1) / dict->size) >= MAX_LOAD_FACTOR);
 }
 
 /**
@@ -131,32 +186,27 @@ t_dict	Dict_Realloc(t_dict old_dict)
  * @param dict
  * @param key value or address
  * @param value value or address
- * @param dealloc_key null if is a value
- * @param dealloc_value null if is a value
- * @param cmp function to compare keys
+ * @param dealloc_value function to deallocate value
  * @return true if added, false if key already exists
  */
-bool	Dict_Add(t_dict *dict, Generic key, Generic value,
-		size_t (*hash_key)(Generic, size_t), void (*dealloc_key)(Generic),
-		void (*dealloc_value)(Generic), int (*cmp)(Generic, Generic))
+bool	Dict_Add(t_dict dict, Generic key, Generic value,
+		Deallocator dealloc_value)
 {
-	const size_t	hash = hash_generic(hash_key(key, (*dict)->size),
-				(*dict)->size);
-	LinkedList		*buckets;
-	t_dict			d;
-	Dict_obj		obj;
+	size_t		hash;
+	LinkedList	*buckets;
+	Dict_obj	obj;
 
-	if (!dict || Dict_Get(*dict, key, hash_key, cmp))
+	if (!dict || Dict_Get(dict, key))
 		return (false);
-	d = *dict;
-	if (d->used + 1 > d->size)
-		*dict = Dict_Realloc(*dict);
-	buckets = d->buckets;
-	obj = Dict_Obj_Init(key, value, hash_key, dealloc_key, dealloc_value, cmp);
+	if (dict_has_breached_load_factor(dict))
+		Dict_Realloc(dict);
+	hash = hash_function(dict, dict->hash_key(key, dict->size));
+	buckets = dict->buckets;
+	obj = Dict_Obj_Init(key, value, dict->dealloc_key, dealloc_value);
 	if (!obj)
 		return (false);
 	LinkedList_Push(buckets + hash, obj);
-	d->used++;
+	dict->used++;
 	return (true);
 }
 
@@ -165,20 +215,19 @@ bool	Dict_Add(t_dict *dict, Generic key, Generic value,
  *
  * @param dict
  * @param key
- * @param hash_key
- * @param cmp
  * @return void*
  */
-void	*Dict_Get(t_dict dict, Generic key, size_t (*hash_key)(Generic, size_t),
-		int (*cmp)(Generic, Generic))
+void	*Dict_Get(t_dict dict, Generic key)
 {
-	const size_t	hash = hash_generic(hash_key(key, dict->size), dict->size);
+	const size_t	hash = hash_function(dict, dict->hash_key(key, dict->size));
 	LinkedList		bucket;
 	Dict_obj		obj;
 
+	if (!dict || !dict->used)
+		return (NULL);
 	bucket = (dict->buckets)[hash];
 	while (LinkedList_GetInfo(bucket)
-		&& cmp(((Dict_obj)LinkedList_GetInfo(bucket))->key, key))
+		&& dict->cmp(((Dict_obj)LinkedList_GetInfo(bucket))->key, key))
 		bucket = LinkedList_GetNext(bucket);
 	obj = (Dict_obj)LinkedList_GetInfo(bucket);
 	if (!obj)
@@ -194,7 +243,7 @@ void	*Dict_Get(t_dict dict, Generic key, size_t (*hash_key)(Generic, size_t),
  */
 void	Dict_Remove(t_dict dict, Generic key)
 {
-	const size_t	hash = hash_generic((size_t)key, dict->size);
+	const size_t	hash = hash_function(dict, dict->hash_key(key, dict->size));
 	LinkedList		bucket;
 
 	bucket = (dict->buckets)[hash];
@@ -232,18 +281,13 @@ void	Dict_Free(t_dict dict)
 void	Dict_Status(t_dict dict)
 {
 	LinkedList	bucket;
-	size_t		count;
 
 	printf("Number of buckets used: %zu\n", dict->size);
+	printf("Number of elements: %zu\n", dict->used);
+	printf("Load factor: %f\n", (double)dict->used / dict->size);
 	for (size_t i = 0; i < dict->size; i++)
 	{
 		bucket = dict->buckets[i];
-		count = 0;
-		while (bucket != NULL)
-		{
-			count++;
-			bucket = LinkedList_GetNext(bucket);
-		}
-		printf("Bucket %zu: %zu elements\n", i, count);
+		printf("Bucket %zu: %zu elements\n", i, LinkedList_Size(bucket));
 	}
 }

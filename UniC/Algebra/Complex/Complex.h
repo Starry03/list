@@ -11,12 +11,12 @@ typedef struct s_complex
 
 typedef t_complex_		*t_complex;
 
-t_complex				complex_init(t_complex_type re, t_complex_type im);
-void					complex_free(t_complex c);
-t_complex_type			complex_mod(t_complex c);
-t_complex				complex_add(t_complex a, t_complex b);
-t_complex				complex_sub(t_complex a, t_complex b);
-t_complex				complex_mul(t_complex a, t_complex b);
-t_complex				complex_div(t_complex a, t_complex b);
+t_complex				Complex_Init(t_complex_type re, t_complex_type im);
+void					Complex_free(t_complex c);
+t_complex_type			Complex_mod(t_complex c);
+t_complex				Complex_add(t_complex a, t_complex b);
+t_complex				Complex_sub(t_complex a, t_complex b);
+t_complex				Complex_mul(t_complex a, t_complex b);
+t_complex				Complex_div(t_complex a, t_complex b);
 
 #endif

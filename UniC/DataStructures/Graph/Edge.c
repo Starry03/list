@@ -1,7 +1,7 @@
 #include "Graph.h"
 #include <stdlib.h>
 
-Edge	Edge_Init(Vertex src, Vertex dest, uint32_t weight)
+Edge	Edge_Init(Vertex src, Vertex dest, uint64_t weight)
 {
 	Edge	edge;
 

@@ -17,3 +17,22 @@ void Log_intarray(int *arr, size_t size, size_t new_index) {
 	}
 	printf("]\n");
 }
+
+void	Log(e_log_type type, const char *message)
+{
+	switch (type)
+	{
+		case LOG_INFO:
+			printf("%s[INFO]%s %s\n", HGRN, reset, message);
+			break;
+		case LOG_WARNING:
+			printf("%s[WARNING]%s %s\n", HYEL, reset, message);
+			break;
+		case LOG_ERROR:
+			printf("%s[ERROR]%s %s\n", HRED, reset, message);
+			break;
+		case LOG_FATAL:
+			printf("%s[FATAL]%s %s\n", HRED, reset, message);
+			break;
+	}
+}
