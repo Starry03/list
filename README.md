@@ -42,11 +42,12 @@ list <'path'> <'-flags'>
 
 #### Flags
 
-- ```R``` recursive 
+- ```R``` recursive
 - ```d``` file size
 - ```a``` hidden files
 - ```V``` version
 - ```l``` permissions
+- ```h``` help
 
 ### ls vs list
 

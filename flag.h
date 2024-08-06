@@ -13,20 +13,22 @@ enum		e_flag
 	SHOW_HIDDEN,
 	VERSION,
 	PERMISSIONS,
+	HELP,
 };
 
 char		*get_flag(enum e_flag flag);
 
 typedef struct s_flags
 {
+	char	**ignore_patterns;
+	char	*root_path;
+	int		col_width;
 	bool	log_dim;
 	bool	recursive;
 	bool	show_hidden;
 	bool	show_version;
 	bool	show_permissions;
-	int		col_width;
-	char	*root_path;
-	char	**ignore_patterns;
+	bool	help;
 }			t_flags;
 
 void		init_default_flags(t_flags *flags);

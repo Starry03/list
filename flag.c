@@ -25,6 +25,8 @@ char	*get_flag(enum e_flag flag)
 		return ("V");
 	case PERMISSIONS:
 		return ("l");
+	case HELP:
+		return ("h");
 	}
 	return (NULL);
 }
@@ -37,6 +39,7 @@ void	init_default_flags(t_flags *flags)
 	flags->show_hidden = false;
 	flags->show_version = false;
 	flags->show_permissions = false;
+	flags->help = false;
 	flags->root_path = ".";
 	flags->ignore_patterns = (char **)calloc(N_PATTERNS + 1, sizeof(char *));
 	flags->ignore_patterns[0] = strdup(IGNORE_HIDDEN_FILES);
@@ -75,6 +78,7 @@ void	parse_flags(t_flags *flags, size_t argc, char **argv)
 	flags->show_hidden = HAS_FLAG(SHOW_HIDDEN, i);
 	flags->show_version = HAS_FLAG(VERSION, i);
 	flags->show_permissions = HAS_FLAG(PERMISSIONS, i);
+	flags->help = HAS_FLAG(HELP, i);
 	set_ignore_patterns(flags);
 }
 
