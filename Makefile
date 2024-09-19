@@ -13,6 +13,9 @@ all:
 uniC:
 	cd UniC && make re
 
+install42:
+	$(CC) $(FLAGS) $(OPT) $(SRC) -o $(NAME) $(UNIC) -D ICON_PATH='"//nfs//homes//astarran//Desktop//list//icons.txt"'
+
 install: uniC
 	$(CC) $(FLAGS) $(OPT) $(SRC) -o $(NAME) $(UNIC) -D ICON_PATH='"//usr//local//share//list//icons.txt"'
 
