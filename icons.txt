@@ -11,7 +11,7 @@ jar  red
 kt  purple
 swift  orange
 py  yellow
-h  purple
+h  purple
 cpp  blue
 cs 󰌛 blue
 rb  red
