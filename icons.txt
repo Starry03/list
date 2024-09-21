@@ -2,6 +2,9 @@
 a  green
 c  blue
 js  yellow
+ts  blue
+jsx  blue
+tsx  blue
 java  red
 class  red
 jar  red
