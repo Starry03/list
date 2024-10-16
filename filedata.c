@@ -40,7 +40,7 @@ char	*file_get_extension(char *name)
 {
 	char	*index;
 
-	index = strrchr(name, '.');
+	index = strchr(name, '.');
 	if (!index)
 		return (NULL);
 	return (index + 1);
@@ -58,13 +58,13 @@ static char	*filename_truncated(char *name, t_flags flags)
 static void	print_permissions(t_permissions *permissions, t_flags options)
 {
 	printf("%s%s%s%-*s", permissions->owner, permissions->group,
-		permissions->others, options.col_width - PERMISSIONS_LENGTH, "");
+			permissions->others, options.col_width - PERMISSIONS_LENGTH, "");
 }
 
 static void	print_dir(t_filedata *filedata, t_flags options)
 {
 	printf("%s\ue5ff%s %-*s", ORANGE, STD_COLOR, options.col_width - 2,
-		filedata->name);
+			filedata->name);
 	if (options.show_permissions)
 		print_permissions(filedata->permissions, options);
 	putc('\n', stdout);
@@ -82,12 +82,14 @@ static void	print_file(t_filedata *filedata, t_flags options, t_dict icons)
 	icon = NULL;
 	file_extension = file_get_extension(filedata->name);
 	if (file_extension)
+	{
 		icon = (char *)Dict_Get(icons, file_extension);
+	}
 	if (!icon)
 		printf("%-*s", col_width, filename_truncated(filename, options));
 	else
 		printf("%s %-*s", icon, col_width - 2, filename_truncated(filename,
-				options));
+					options));
 	if (options.show_permissions)
 		print_permissions(filedata->permissions, options);
 	if (!options.log_dim)

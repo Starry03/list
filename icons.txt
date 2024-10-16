@@ -29,6 +29,14 @@ sqlite  yellow
 db  yellow
 sql  yellow
 tex  blue
+# env
+env  gray
+env.local  gray
+env.development  gray
+env.production  gray
+env.test  gray
+env.staging  gray
+env.example  gray
 # generic
 xml  blue
 yaml  gray
