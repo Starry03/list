@@ -1,4 +1,5 @@
 #include "unic/hashfunctions.h"
+#include "unic/comparators.h"
 #include "libft/libft.h"
 #include "colors.h"
 #include "list.h"
@@ -21,7 +22,7 @@ static t_dict	colors_dict(void)
 {
 	t_dict	colors;
 
-	colors = dict_init(10, &string_compare_ignore_case, &hash_string, &free);
+	colors = dict_init(10, &cmp_string, &hash_string, &free);
 	ADD_COLOR(colors, "black", BLACK);
 	ADD_COLOR(colors, "red", RED);
 	ADD_COLOR(colors, "green", GREEN);
@@ -52,7 +53,7 @@ t_theme	theme_parser(const char *config_path)
 	t_dict	colors;
 
 	colors = colors_dict();
-	theme = theme_init("default", dict_init(ICONS_DICT_SIZE, &string_compare_ignore_case, &hash_string, &free));
+	theme = theme_init("default", dict_init(ICONS_DICT_SIZE, &cmp_string, &hash_string, &free));
 	icons_file = fopen(config_path, "r");
 	if (!icons_file)
 		return (NULL);

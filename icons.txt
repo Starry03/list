@@ -1,6 +1,7 @@
 # dev
 a  green
 c  blue
+o 󰆧 gray
 js  yellow
 ts  blue
 jsx  blue
