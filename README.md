@@ -3,7 +3,7 @@
 
 A better version of 'ls'
 
-- better tree representation
+- tree representation
 
 - icons
 
@@ -17,8 +17,7 @@ Version 2
 
 ### TODO
 
-- themes (only default is available now)
-
+- themes
 
 ### Linux
 
@@ -51,5 +50,10 @@ list <'path'> <'-flags'>
 
 ### ls vs list
 
-- list about 2x ls ram
-- speed: really close to ls
+#### RAM
+- about 3/2 of ls ram
+- tested with valgrind
+  
+#### Speed
+- really close to ls
+- not tested
