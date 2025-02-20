@@ -15,7 +15,7 @@ void	print_change_log(void)
 	FILE	*file;
 	char	c;
 
-	file = fopen("changes.log", "r");
+	file = fopen(LOG_PATH, "r");
 	if (!file)
 	{
 		printf("No change log found\n");

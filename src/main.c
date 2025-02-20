@@ -1,7 +1,7 @@
 #include "list.h"
-#include <stdlib.h>
 #include "theme.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 static void	_main(t_theme theme, t_flags flags)
 {
@@ -25,12 +25,14 @@ int	main(int argc, char **argv)
 	{
 		PRINT_VERSION;
 		printf(LIST_HELP_STRING);
-		print_change_log();
 	}
 	else if (!flags.show_version)
 		_main(theme, flags);
 	else
+	{
 		PRINT_VERSION;
+		print_change_log();
+	}
 	flags_free(&flags);
 	return (EXIT_SUCCESS);
 }

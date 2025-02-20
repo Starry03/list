@@ -7,7 +7,7 @@ SRC_DIR = ./src/
 INC_DIR = ./include/
 SRC = $(SRC_DIR)*.c
 INC = -I$(INC_DIR)
-
+DEFINES = -D ICON_PATH='"//usr//local//share//list//icons.txt" -D LOG_PATH='"//usr//local//share//list//changes.txt"'
 UNIC = ./UniC/unic.a -I./UniC/
 
 all: uniC
@@ -16,11 +16,11 @@ all: uniC
 uniC:
 	make -C UniC
 
-install42:
-	$(CC) $(FLAGS) $(INC) $(OPT) $(SRC) -o $(NAME) $(UNIC) -D ICON_PATH='"//nfs//homes//astarran//Desktop//list//icons.txt"'
+install_no_root: uniC
+	$(CC) $(FLAGS) $(INC) $(OPT) $(SRC) -o $(NAME) $(UNIC) $(DEFINES)
 
 install: uniC
-	$(CC) $(FLAGS) $(INC) $(OPT) $(SRC) -o $(NAME) $(UNIC) -D ICON_PATH='"//usr//local//share//list//icons.txt"'
+	$(CC) $(FLAGS) $(INC) $(OPT) $(SRC) -o $(NAME) $(UNIC) $(DEFINES)
 
 valgrind: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) $(PROGRAM_FLAGS)

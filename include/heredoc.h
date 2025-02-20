@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef LOG_PATH
+# define LOG_PATH "./changes.log
+#endif
+
 #include "unic/types.h"
 
 #define VERSION "Version 2.3"
