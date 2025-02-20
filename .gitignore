@@ -1,4 +1,8 @@
 .vscode
+*gdb*
+*.o
+*.out
+*vgcore*
 
 # executables
 list

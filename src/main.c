@@ -3,11 +3,6 @@
 #include "theme.h"
 #include <stdio.h>
 
-#define VERSION "Version 2.2"
-#define CHANGE_LOG "Added -h flag"
-#define PRINT_VERSION printf("%s\n%s\n", VERSION, CHANGE_LOG)
-#define PRINT_HELP printf("Usage: list <path> -flags\n\nOptions:\n  -d\t\tLog dimensions\n  -R\t\tRecursive\n  -a\t\tShow hidden files\n  -V\t\tShow version\n  -l\t\tShow permissions\n  -h\t\tShow help\n")
-
 static void	_main(t_theme theme, t_flags flags)
 {
 	theme = theme_parser(ICON_PATH);
@@ -29,7 +24,8 @@ int	main(int argc, char **argv)
 	if (flags.help)
 	{
 		PRINT_VERSION;
-		PRINT_HELP;
+		printf(LIST_HELP_STRING);
+		print_change_log();
 	}
 	else if (!flags.show_version)
 		_main(theme, flags);
