@@ -7,7 +7,7 @@ SRC_DIR = ./src/
 INC_DIR = ./include/
 SRC = $(SRC_DIR)*.c
 INC = -I$(INC_DIR)
-DEFINES = -D ICON_PATH='"//usr//local//share//list//icons.txt" -D LOG_PATH='"//usr//local//share//list//changes.txt"'
+DEFINES = -D ICON_PATH='"//usr//local//share//list//icons.txt"' -D LOG_PATH='"//usr//local//share//list//changes.log"'
 UNIC = ./UniC/unic.a -I./UniC/
 
 all: uniC

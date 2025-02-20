@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef LOG_PATH
-# define LOG_PATH "./changes.log
+# define LOG_PATH "./changes.log"
 #endif
 
 #include "unic/types.h"
