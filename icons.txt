@@ -51,7 +51,6 @@ exe  blue
 msi  blue
 bat  green
 # linux
-
 cmd  green
 sh  green
 service  gray
@@ -92,3 +91,5 @@ ttf  red
 otf  red
 woff  red
 woff2  red
+# rnote
+rnote  white
