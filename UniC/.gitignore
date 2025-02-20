@@ -3,7 +3,10 @@ cmake-build-debug
 .idea
 .vscode
 build/
-.venv
+/.venv
+**/.env
+test/
+*.sql
 
 # files
 CMakeLists.txt

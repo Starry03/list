@@ -1,17 +1,16 @@
-#include "DataStructures/Graph/Graph.h"
-#include "DataStructures/Heap/Heap.h"
-#include "Utils/Compare/comparators.h"
-#include "examples.h"
-
-#include "Utils/Dealloc/Dealloc.h"
+# include "unic/comparators.h"
+# include "unic/graph.h"
+# include "unic/heap.h"
+#include "unic/examples.h"
+# include "unic/dealloc.h"
 
 void	test_graph(void)
 {
-	Graph graph;
+	t_graph	graph;
 
 	graph = get_example_graph();
-	Graph_GenerateMermaid(graph, "examples/graph.md", MERMAID_HORIZONAL);
-	Graph_Free(graph);
+	graph_generate_mermaid(graph, "examples/graph.md", MERMAID_HORIZONAL);
+	graph_free(graph);
 }
 
 int	main(void)

@@ -1,13 +1,9 @@
-DIRS := Algebra Algorithms DataStructures libft Utils
-
+DIRS := algebra algorithms datastructures libft utils
 SRCS := $(shell find $(DIRS) -name '*.c')
-
 OBJS := $(SRCS:.c=.o)
-
-LIB := UniC.a
-
+LIB := unic.a
 CC := gcc
-CFLAGS := -I. -g -Wall -Wextra -Werror
+CFLAGS := -I. -Wall -Wextra -Werror
 LINK := -lm
 UniC := ./$(LIB)
 

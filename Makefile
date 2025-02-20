@@ -3,21 +3,24 @@ FLAGS = -Wall -Werror -Wextra
 OPT = -O3
 NAME = list
 PROGRAM_FLAGS =
-SRC = $(wildcard *.c)
+SRC_DIR = ./src/
+INC_DIR = ./include/
+SRC = $(SRC_DIR)*.c
+INC = -I$(INC_DIR)
 
-UNIC = ./UniC/UniC.a -I./UniC
+UNIC = ./UniC/unic.a -I./UniC/
 
-all:
-	$(CC) $(FLAGS) $(OPT) $(SRC) -o $(NAME) $(UNIC)
+all: uniC
+	$(CC) $(FLAGS) $(INC) $(OPT) $(SRC) -o $(NAME) $(UNIC)
 
 uniC:
-	cd UniC && make re
+	make -C UniC
 
 install42:
-	$(CC) $(FLAGS) $(OPT) $(SRC) -o $(NAME) $(UNIC) -D ICON_PATH='"//nfs//homes//astarran//Desktop//list//icons.txt"'
+	$(CC) $(FLAGS) $(INC) $(OPT) $(SRC) -o $(NAME) $(UNIC) -D ICON_PATH='"//nfs//homes//astarran//Desktop//list//icons.txt"'
 
 install: uniC
-	$(CC) $(FLAGS) $(OPT) $(SRC) -o $(NAME) $(UNIC) -D ICON_PATH='"//usr//local//share//list//icons.txt"'
+	$(CC) $(FLAGS) $(INC) $(OPT) $(SRC) -o $(NAME) $(UNIC) -D ICON_PATH='"//usr//local//share//list//icons.txt"'
 
 valgrind: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) $(PROGRAM_FLAGS)

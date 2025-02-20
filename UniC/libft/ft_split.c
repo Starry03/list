@@ -42,7 +42,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	words = cnt_split(s, c, ind, ind + 1);
-	arr = (char **) malloc(sizeof(char *) * (words + 1));
+	arr = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!arr)
 		return (NULL);
 	count = 0;
@@ -54,7 +54,7 @@ char	**ft_split(char const *s, char c)
 		ind[1] = ind[0] + 1;
 		while (s[ind[1]] && s[ind[1]] != c)
 			ind[1]++;
-		arr[count] = (char *) malloc(sizeof(char) * (ind[1] - ind[0] + 1));
+		arr[count] = (char *)malloc(sizeof(char) * (ind[1] - ind[0] + 1));
 		ft_strlcpy(arr[count++], s + ind[0], ind[1] - ind[0] + 1);
 	}
 	arr[count] = NULL;

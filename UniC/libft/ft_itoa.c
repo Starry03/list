@@ -44,7 +44,7 @@ char	*ft_itoa(int n)
 	size_t	len;
 
 	len = int_len(n, 0) + 1 + 1 * (n < 0);
-	str = (char *) malloc(sizeof(char) * (len));
+	str = (char *)malloc(sizeof(char) * (len));
 	if (!str)
 		return (NULL);
 	if (n == -2147483648)

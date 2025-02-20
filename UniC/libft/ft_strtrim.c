@@ -42,7 +42,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (ft_strdup(""));
 	while (is_in_string(s1[right], set))
 		right--;
-	new_string = (char *) malloc(sizeof(char) * (right - left + 2));
+	new_string = (char *)malloc(sizeof(char) * (right - left + 2));
 	if (!new_string)
 		return (NULL);
 	ft_strlcpy(new_string, s1 + left, right - left + 2);

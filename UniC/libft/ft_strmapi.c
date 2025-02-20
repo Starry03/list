@@ -21,7 +21,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	if (!s || !f)
 		return (NULL);
 	s_len = (unsigned int)ft_strlen(s);
-	new_string = (char *) malloc(sizeof(char) * (s_len + 1));
+	new_string = (char *)malloc(sizeof(char) * (s_len + 1));
 	if (!new_string)
 		return (NULL);
 	i = 0;

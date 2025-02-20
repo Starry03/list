@@ -17,7 +17,7 @@ char	*ft_strchr(const char *s, int c)
 	char	cc;
 	char	*ss;
 
-	cc = (char) c;
+	cc = (char)c;
 	ss = (char *)s;
 	while (*ss || cc == '\0')
 	{

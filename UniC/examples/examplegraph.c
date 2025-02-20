@@ -1,42 +1,42 @@
-#include "examples.h"
-#include "Utils/Compare/comparators.h"
+#include "unic/examples.h"
+# include "unic/comparators.h"
 
 /**
  * @return an example graph
  */
-Graph	get_example_graph(void)
+t_graph	get_example_graph(void)
 {
-	Graph graph;
-	Vertex v1;
-	Vertex v2;
-	Vertex v3;
-	Vertex v4;
-	Vertex v5;
-	Vertex v6;
+	t_graph		graph;
+	t_vertex	v1;
+	t_vertex	v2;
+	t_vertex	v3;
+	t_vertex	v4;
+	t_vertex	v5;
+	t_vertex	v6;
 
-	graph = Graph_Init(NULL, Compare_String);
-	v1 = Vertex_Init("a");
-	v2 = Vertex_Init("b");
-	v3 = Vertex_Init("c");
-	v4 = Vertex_Init("d");
-	v5 = Vertex_Init("e");
-	v6 = Vertex_Init("f");
+	graph = graph_init(NULL, Compare_String);
+	v1 = vertex_init("a");
+	v2 = vertex_init("b");
+	v3 = vertex_init("c");
+	v4 = vertex_init("d");
+	v5 = vertex_init("e");
+	v6 = vertex_init("f");
 	// add vertices to the graph
-	Graph_AddVertex(graph, v6);
-	Graph_AddVertex(graph, v5);
-	Graph_AddVertex(graph, v4);
-	Graph_AddVertex(graph, v3);
-	Graph_AddVertex(graph, v2);
-	Graph_AddVertex(graph, v1);
+	graph_add_vertex(graph, v6);
+	graph_add_vertex(graph, v5);
+	graph_add_vertex(graph, v4);
+	graph_add_vertex(graph, v3);
+	graph_add_vertex(graph, v2);
+	graph_add_vertex(graph, v1);
 	// add edges to the graph
-	Graph_AddEdge(v5, Edge_Init(v5, v6, 2));
-	Graph_AddEdge(v6, Edge_Init(v6, v1, 1));
-	Graph_AddEdge(v6, Edge_Init(v6, v3, 3));
-	Graph_AddEdge(v6, Edge_Init(v6, v5, 6));
-	Graph_AddEdge(v4, Edge_Init(v4, v5, 3));
-	Graph_AddEdge(v2, Edge_Init(v2, v5, 1));
-	Graph_AddEdge(v2, Edge_Init(v2, v3, 4));
-	Graph_AddEdge(v1, Edge_Init(v1, v4, 1));
-	Graph_AddEdge(v1, Edge_Init(v1, v2, 2));
+	graph_add_edge(v5, edge_init(v5, v6, 2));
+	graph_add_edge(v6, edge_init(v6, v1, 1));
+	graph_add_edge(v6, edge_init(v6, v3, 3));
+	graph_add_edge(v6, edge_init(v6, v5, 6));
+	graph_add_edge(v4, edge_init(v4, v5, 3));
+	graph_add_edge(v2, edge_init(v2, v5, 1));
+	graph_add_edge(v2, edge_init(v2, v3, 4));
+	graph_add_edge(v1, edge_init(v1, v4, 1));
+	graph_add_edge(v1, edge_init(v1, v2, 2));
 	return (graph);
 }

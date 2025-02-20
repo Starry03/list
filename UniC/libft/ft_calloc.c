@@ -16,7 +16,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*addr;
 
-	addr = (char *) malloc(nmemb * size);
+	addr = (char *)malloc(nmemb * size);
 	if (!addr)
 		return (0);
 	ft_bzero(addr, nmemb * size);
