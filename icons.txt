@@ -51,6 +51,7 @@ exe  blue
 msi  blue
 bat  green
 # linux
+
 cmd  green
 sh  green
 service  gray

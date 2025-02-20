@@ -70,7 +70,7 @@ static void	print_permissions(t_permissions *permissions, t_flags options)
 static void	print_dir(t_filedata *filedata, t_flags options)
 {
 	printf("%s\ue5ff%s %-*s", ORANGE, STD_COLOR, options.col_width - 2,
-		filedata->name);
+		filename_truncated(filedata->name, options));
 	if (options.show_permissions)
 		print_permissions(filedata->permissions, options);
 	putc('\n', stdout);
