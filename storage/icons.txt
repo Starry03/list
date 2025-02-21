@@ -14,6 +14,7 @@ swift  orange
 py  yellow
 h  purple
 cpp  blue
+hpp  purple
 cs 󰌛 blue
 rb  red
 rs  red
