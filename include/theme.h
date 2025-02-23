@@ -2,7 +2,7 @@
 # define THEME_H
 
 # ifndef ICON_PATH
-#  define ICON_PATH "./icons.txt"
+#  define ICON_PATH "./storage/icons.txt"
 # endif
 
 # include "unic/dictionary.h"

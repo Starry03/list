@@ -31,6 +31,7 @@ sqlite  yellow
 db  yellow
 sql  yellow
 tex  blue
+out 󰞷 red
 # env
 env  gray
 env.local  gray
@@ -52,8 +53,10 @@ exe  blue
 msi  blue
 bat  green
 # linux
+desktop  blue
 cmd  green
 sh  green
+zsh  green
 service  gray
 # macos
 app  blue
