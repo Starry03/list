@@ -32,6 +32,14 @@ db  yellow
 sql  yellow
 tex  blue
 out 󰞷 red
+bash_history  green
+bashrc  green
+profile  blue
+bash_profile  blue
+zshrc  yellow
+zsh_history  yellow
+gdbinit  green
+gdb_history  green
 # env
 env  gray
 env.local  gray
