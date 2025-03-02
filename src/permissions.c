@@ -15,6 +15,8 @@ t_permissions	*permissions_init(void)
 }
 void	permissions_free(t_permissions *permissions)
 {
+	if (!permissions)
+		return ;
 	free(permissions->owner);
 	free(permissions->group);
 	free(permissions->others);

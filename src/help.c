@@ -1,4 +1,4 @@
-#include "heredoc.h"
+#include "help.h"
 #include <stdio.h>
 
 t_string	LIST_HELP_STRING = "Usage: list <path> -flags	\n"

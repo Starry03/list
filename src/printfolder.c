@@ -51,7 +51,7 @@ static void	print_folder_core(char *folder_name, size_t folder_level,
 {
 	t_string	buf;
 
-	print_filedata(filedata, flags, icons);
+	filedata_print(filedata, flags, icons);
 	if (filedata->type == T_DIR && flags.recursive)
 	{
 		buf = build_path(folder_name, filedata->name);

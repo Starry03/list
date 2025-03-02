@@ -39,7 +39,7 @@ void	filedata_free(t_generic filedata)
 
 bool	is_valid_type(t_type type)
 {
-	return (type == T_FILE || type == T_DIR);
+	return (type == T_FILE || type == T_DIR || type == T_SIMLINK);
 }
 
 char	*file_get_extension(char *name)
@@ -103,11 +103,12 @@ static void	print_file(t_filedata *filedata, t_flags options, t_dict icons)
 	printf("%zu B", filedata->size);
 }
 
-void	print_filedata(t_filedata *filedata, t_flags options, t_dict icons)
+void	filedata_print(t_filedata *filedata, t_flags options, t_dict icons)
 {
 	switch (filedata->type)
 	{
 	case T_FILE:
+	case T_SIMLINK:
 		print_file(filedata, options, icons);
 		break ;
 	case T_DIR:
@@ -133,7 +134,10 @@ t_filedata	*filedata_get_from_file(struct dirent *d, char *path, t_flags flags)
 	{
 		file = fopen(path, "r");
 		if (!file)
+		{
+			permissions_free(permissions);
 			return (NULL);
+		}
 		size = get_size(file);
 		fclose(file);
 	}
