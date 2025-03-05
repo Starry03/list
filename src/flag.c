@@ -1,35 +1,15 @@
 #include "flag.h"
+#include "help.h"
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #define N_PATTERNS 5
 #define IGNORE_HIDDEN_FILES "^[.]"
 #define IGNORE_CURRENT_DIR "^\\.$"
 #define IGNORE_PREV_DIR "^\\.\\.$"
-
-#define HAS_FLAG(FLAG, i) strstr(argv[i], get_flag(FLAG));
-
-char	*get_flag(enum e_flag flag)
-{
-	switch (flag)
-	{
-	case LOG_DIM:
-		return ("d");
-	case RECURSIVE:
-		return ("R");
-	case SHOW_HIDDEN:
-		return ("a");
-	case VERSION:
-		return ("V");
-	case PERMISSIONS:
-		return ("l");
-	case HELP:
-		return ("h");
-	}
-	return (NULL);
-}
 
 void	init_default_flags(t_flags *flags)
 {
@@ -60,26 +40,41 @@ static void	set_ignore_patterns(t_flags *flags)
 	}
 }
 
-void	parse_flags(t_flags *flags, size_t argc, char **argv)
+void	get_flags(int argc, char **argv, t_flags *flags)
 {
-	size_t	i;
+	int32_t	opt;
 
-	i = 1;
 	if (argc < 2)
 		return ;
-	if (argv[1][0] != '-')
-	{
+	if (argv[1] && argv[1][0] != '-')
 		flags->root_path = argv[1];
-		i++;
+	while ((opt = getopt(argc, argv, FLAG_LIST)) != -1)
+	{
+		switch (opt)
+		{
+		case 'd':
+			flags->log_dim = true;
+			break ;
+		case 'a':
+			flags->show_hidden = true;
+			break ;
+		case 'l':
+			flags->show_permissions = true;
+			break ;
+		case 'R':
+			flags->recursive = true;
+			break ;
+		case 'V':
+			flags->show_version = true;
+			break ;
+		case 'h':
+			flags->help = true;
+			break ;
+		default:
+			printf(LIST_HELP_STRING);
+			exit(EXIT_FAILURE);
+		}
 	}
-	if (i == 2 && argc < 3)
-		return ;
-	flags->log_dim = HAS_FLAG(LOG_DIM, i);
-	flags->recursive = HAS_FLAG(RECURSIVE, i);
-	flags->show_hidden = HAS_FLAG(SHOW_HIDDEN, i);
-	flags->show_version = HAS_FLAG(VERSION, i);
-	flags->show_permissions = HAS_FLAG(PERMISSIONS, i);
-	flags->help = HAS_FLAG(HELP, i);
 	set_ignore_patterns(flags);
 }
 

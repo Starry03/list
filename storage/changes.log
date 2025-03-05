@@ -3,3 +3,5 @@ Changes
 - added sort
 - refactor of core logic
 - added icons
+- change flag parsing method (now uses getopt)
+

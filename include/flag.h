@@ -13,18 +13,6 @@ enum			e_sort
 	SORT_DIRFIRST, // default
 };
 
-enum			e_flag
-{
-	LOG_DIM,
-	RECURSIVE,
-	SHOW_HIDDEN,
-	VERSION,
-	PERMISSIONS,
-	HELP,
-};
-
-char			*get_flag(enum e_flag flag);
-
 typedef struct s_flags
 {
 	char		**ignore_patterns;
@@ -39,8 +27,10 @@ typedef struct s_flags
 	bool		help;
 }				t_flags;
 
+# define FLAG_LIST "dalhVR"
+
 void			init_default_flags(t_flags *flags);
-void			parse_flags(t_flags *flags, size_t argc, char **argv);
+void			get_flags(int argc, char **argv, t_flags *flags);
 bool			is_valid_folder(char *name, t_flags options);
 void			flags_free(t_flags *flags);
 

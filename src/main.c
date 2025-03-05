@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 
 	theme = NULL;
 	init_default_flags(&flags);
-	parse_flags(&flags, argc, argv);
+	get_flags(argc, argv, &flags);
 	if (flags.help)
 	{
 		PRINT_VERSION;
