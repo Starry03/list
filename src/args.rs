@@ -11,6 +11,10 @@ pub struct Args {
     #[arg(short, long, default_value_t = false)]
     pub version: bool,
 
+    /// show hidden files
+    #[arg(short('a'), long("all"), default_value_t = false)]
+    pub hidden: bool,
+
     /// show file permissions
     #[arg(short('l'), long("l"), default_value_t = false)]
     pub permissions: bool,

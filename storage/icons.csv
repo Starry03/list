@@ -1,5 +1,5 @@
 group,extension,icon,color
-folder,_folder,,blue
+folder,_folder,,orange
 dev,a,,green
 dev,c,,blue
 dev,o,󰆧,gray
@@ -60,7 +60,7 @@ generic,yml,,gray
 generic,dll,,blue
 generic,conf,,gray
 generic,iso,,gray
-generic,LICENSE,,blue
+generic,LICENSE,,yellow
 windows,exe,,blue
 windows,msi,,blue
 windows,bat,,green

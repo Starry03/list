@@ -3,6 +3,7 @@ use toml;
 use clap::Parser;
 use walkdir::WalkDir;
 use std::io;
+use std::io::Write;
 use std::path::Path;
 
 use list::args::Args;
@@ -19,13 +20,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Ok(());
     }
 
-    list_path(&args.path, args.recursive)?;
+    list_path(&args)?;
 
     return Ok(());
 }
 
-fn list_path(path: &str, recursive: bool) -> Result<(), Box<dyn std::error::Error>> {
-    let path = Path::new(path);
+fn list_path(args: &Args) -> Result<(), Box<dyn std::error::Error>> {
+    let path = Path::new(&args.path);
     let icons_cache = build_icons_cache("./storage/icons.csv".to_string());
 
     if path.is_file() {
@@ -33,7 +34,7 @@ fn list_path(path: &str, recursive: bool) -> Result<(), Box<dyn std::error::Erro
         return Ok(());
     }
 
-    let walker = WalkDir::new(path).max_depth(if recursive { usize::MAX } else { 1 });
+    let walker = WalkDir::new(path).max_depth(if args.recursive { usize::MAX } else { 1 });
     let stdout = io::stdout();
     let mut handle = stdout.lock();
 
@@ -41,6 +42,9 @@ fn list_path(path: &str, recursive: bool) -> Result<(), Box<dyn std::error::Erro
         let entry = entry?;
 
         let name = entry.file_name();
+        if args.hidden == false && name.to_str().unwrap().starts_with(".") {
+            continue;
+        }
         let ext = entry.path().extension();
         let key: String;
         if ext.is_none() {
@@ -52,8 +56,12 @@ fn list_path(path: &str, recursive: bool) -> Result<(), Box<dyn std::error::Erro
         if icon.is_none() && entry.file_type().is_dir() {
             icon = icons_cache.get("_folder");
         }
-        writer::write_tab(&mut handle, entry.depth())?;
+        writer::write_align(&mut handle, entry.depth())?;
         writer::write_filename(&mut handle, name.to_str().unwrap(), icon)?;
+        if args.permissions {
+            write!(handle, "\t{}", writer::get_permissions_string(entry.path()))?;
+        }
+        write!(handle, "\n")?;
     }
 
     Ok(())
