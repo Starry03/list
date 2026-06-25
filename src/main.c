@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 	if (flags.help)
 	{
 		PRINT_VERSION;
-		printf(LIST_HELP_STRING);
+		printf("%s", LIST_HELP_STRING);
 	}
 	else if (!flags.show_version)
 		_main(theme, flags);

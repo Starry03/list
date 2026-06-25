@@ -71,7 +71,7 @@ void	get_flags(int argc, char **argv, t_flags *flags)
 			flags->help = true;
 			break ;
 		default:
-			printf(LIST_HELP_STRING);
+			printf("%s", LIST_HELP_STRING);
 			exit(EXIT_FAILURE);
 		}
 	}

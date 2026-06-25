@@ -13,7 +13,7 @@ t_string	LIST_HELP_STRING = "Usage: list <path> -flags	\n"
 void	print_change_log(void)
 {
 	FILE	*file;
-	char	c;
+	int	c;
 
 	file = fopen(LOG_PATH, "r");
 	if (!file)
@@ -22,6 +22,6 @@ void	print_change_log(void)
 		return ;
 	}
 	while ((c = fgetc(file)) != EOF)
-		printf("%c", c);
+		putchar(c);
 	fclose(file);
 }
